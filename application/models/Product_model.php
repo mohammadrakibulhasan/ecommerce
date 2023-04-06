@@ -4,7 +4,7 @@ class Product_model extends CI_Model
 {
 
 
-    public function getall($cat = '', $price = '')
+    public function getall($order='', $cat = '', $price = '')
     {
         if ($cat != null) {
 
@@ -13,6 +13,11 @@ class Product_model extends CI_Model
         if ($price != null) {
 
             $this->db->where('productPrice>=', $price);
+        }
+        if($order != null)
+        {
+            $this->db->order_by('productName', $order);
+
         }
 
 

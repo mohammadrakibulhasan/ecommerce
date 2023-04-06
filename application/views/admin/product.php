@@ -51,7 +51,7 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
 
         <div class="details text-center table-responsive">
-            <h1>Category Details</h1>
+            <h1>Product List</h1>
             <a class="btn btn-info" href="" data-toggle="modal" data-target="#add">Add New</a>
             <form action="<?= base_url() . 'admin/multi' ?>" method="post">
 
@@ -77,16 +77,34 @@
                         <th class="text-center">Quantity</th>
                         <th class="text-center">Action</th>
                     </tr>
-                    <?php foreach ($category as $cat) : ?>
-                        <tr id="<?php echo $cat['id'] ?>">
-                            <td><input type="checkbox" id="id" name="id[]" value="<?= $cat['id'] ?>">
+                    <?php foreach ($product as $pro) : ?>
+                        <tr id="<?php echo $pro['id'] ?>">
+                            <td><input type="checkbox" id="id" name="id[]" value="<?= $pro['id'] ?>">
                             </td>
 
-                            <td><?= $cat['id'] ?></td>
-                            <td><?= $cat['category'] ?></td>
-                            <td><?= $cat['category'] ?></td>
-                            <td><?= $cat['category'] ?></td>
-                            <td><?= $cat['totalorder'] ?></td>
+                            <td><img src="<?= base_url() . '/assets/img/product/' . $pro['productImage'] ?>" height="30px" width="50px" alt=""></td>
+                            <td><?= $pro['productName'] ?></td>
+                            <td><?= $pro['model'] ?></td>
+                            <td>
+                                <?php
+                                if ($pro['oldPrice'] != null) {
+                                ?>
+                                    <s><?= $pro['oldPrice'] ?></s>
+                                    <br>
+                                    <p style="color: red;"><?= $pro['productPrice'] ?></p>
+                                <?php
+                                } else
+                                {
+
+                                ?>
+                                <p><?= $pro['productPrice'] ?></p>
+                                <?php
+                                }
+
+                                ?>
+
+                            </td>
+                            <td><?= $pro['amount'] ?></td>
                             <td><a class="edit btn btn-info btn-sm" data-toggle="modal" data-target="#modalId">
                                     <i class="fa-solid fa-pen"></i></a> <a class="delete btn btn-danger btn-sm">
                                     <i class="fa-solid fa-trash"></i></a></td>

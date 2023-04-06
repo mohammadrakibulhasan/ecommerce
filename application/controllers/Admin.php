@@ -88,10 +88,10 @@ class Admin extends CI_Controller
 			redirect('user/login');
 		}
 		// echo $_POST["cat"];
-		$cat = '';
-		if ($this->input->post('cate1') != null) {
-			$cat = $this->input->post('cate1');
-		}
+		// $cat = '';
+		// if ($this->input->post('cate1') != null) {
+		// 	$cat = $this->input->post('cate1');
+		// }
 
 		// $cat = $this->input->post('cat');
 
@@ -116,8 +116,8 @@ class Admin extends CI_Controller
 		}
 
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
-		$data['product'] = $this->Product_model->getall($cat);
-		$data['category'] = $this->Product_model->category();
+		// $data['category'] = $this->Product_model->category();
+		$data['product'] = $this->Product_model->getall($order);
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/product');
 		$this->load->view('admin/footer');
