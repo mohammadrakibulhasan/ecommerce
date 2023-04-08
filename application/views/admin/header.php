@@ -14,6 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/5f022c8132.js" crossorigin="anonymous"></script>
     <!-- Bootstrap Core CSS -->
+    <link href="<?=$css ?>" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="<?= base_url() . 'assets/plugins/bootstrap/css/bootstrap.min.css' ?>" rel="stylesheet">
     <!-- chartist CSS -->
     <link href="<?= base_url() . 'assets/plugins/chartist-js/dist/chartist.min.css' ?>" rel="stylesheet">

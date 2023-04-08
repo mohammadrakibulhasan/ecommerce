@@ -1,58 +1,10 @@
-<div class="modal fade" id="add" role="dialog">
-    <div class="modal-dialog modal-sm">
-
-        <!-- মোডাল কন্টেন্ট -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">ADD Category</h4>
-            </div>
-            <div class="modal-body">
-                <!-- <p>ADD</p> -->
-                <form class="text-center" action="<?= base_url() . 'admin/addcategory' ?>" method="post">
-                    <input type="text" name="catname" placeholder="Enter your Categoty Name"> <br> <br>
-                    <input class="btn btn-success" type="submit" value="ADD" name="submit">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="modalId" role="dialog">
-    <div class="modal-dialog modal-sm">
-
-        <!-- মোডাল কন্টেন্ট -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <!-- <h4 class="modal-title">মোডাল হেডার</h4> -->
-                <h4 class="modal-title">Update Category</h4>
-            </div>
-            <div class="modal-body text-center">
-                <!-- <p>মোডাল বডি। এখানে মোডালের কন্টেন্ট রাখা হয়।</p> -->
-                <form id="updateForm" method="post">
-                    <input type="text" name="catname"> <br> <br>
-                    <input type="hidden" name="id" id="id">
-                    <input class="btn btn-success" type="submit" id="submit" value="Update" name="submit">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="close" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
 <h1 style="color: green;" class="text-center" id="msg"></h1>
 <div class="row" id="wrap">
     <div class="col-lg-9 col-md-9 col-sm-12">
 
         <div class="details text-center table-responsive">
             <h1>Product List</h1>
-            <a class="btn btn-info" href="" data-toggle="modal" data-target="#add">Add New</a>
+            <a class="btn btn-info" href="<?= base_url().'admin/addproduct'?>" >Add New</a>
             <form action="<?= base_url() . 'admin/multi' ?>" method="post">
 
                 <table id="table" class="table">
@@ -149,7 +101,7 @@
 
     }
 </script>
-<script>
+<!-- <script>
     $(document).ready(function() {
 
         $("#table").on('click', '.delete', function() {
@@ -220,4 +172,4 @@
 
 
     });
-</script>
+</script> -->

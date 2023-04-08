@@ -82,18 +82,29 @@ class Admin extends CI_Controller
 		$this->load->view('admin/filteredproduct', $data);
 		// $this->load->view('user/footer');
 	}
+	public function addproduct()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+
+		$data['title'] = 'Product';
+		$data['css'] = base_url() . 'assets/css/style.css';
+		$id = $this->session->userdata('id');
+
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		// $data['category'] = $this->Product_model->category();
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/addproduct');
+		$this->load->view('admin/footer');
+	}
 	public function product()
 	{
 		if (!$this->session->userdata('id')) {
 			redirect('user/login');
 		}
-		// echo $_POST["cat"];
-		// $cat = '';
-		// if ($this->input->post('cate1') != null) {
-		// 	$cat = $this->input->post('cate1');
-		// }
 
-		// $cat = $this->input->post('cat');
 
 		$data['title'] = 'Product';
 		$data['css'] = base_url() . 'asset/css/home.css';
