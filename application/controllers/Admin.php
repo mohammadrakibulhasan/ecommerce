@@ -88,7 +88,6 @@ class Admin extends CI_Controller
 			redirect('user/login');
 		}
 
-
 		$data['title'] = 'Product';
 		$data['css'] = base_url() . 'assets/css/style.css';
 		$id = $this->session->userdata('id');
@@ -98,6 +97,48 @@ class Admin extends CI_Controller
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/addproduct');
 		$this->load->view('admin/footer');
+	}
+
+	public function addprod()
+	{
+		$productName = $this->input->post('product_description[1][name]');
+		$productName = $this->input->post('product_description[1][product_description]');
+		$productName = $this->input->post('product_description[1][model]');
+		$productName = $this->input->post('sku');
+		$productName = $this->input->post('upc');
+		$productName = $this->input->post('location');
+		$productName = $this->input->post('price');
+		$productName = $this->input->post('tax_class_id');
+		$productName = $this->input->post('quantity');
+		$productName = $this->input->post('minimum');
+		$productName = $this->input->post('subtract');
+		$productName = $this->input->post('stock_status_id');
+		$productName = $this->input->post('date_available');
+		$productName = $this->input->post('shipping');
+		$productName = $this->input->post('length');
+		$productName = $this->input->post('width');
+		$productName = $this->input->post('height');
+		$productName = $this->input->post('length_class_id');
+		$productName = $this->input->post('weight');
+		$productName = $this->input->post('weight_class_id');
+		$productName = $this->input->post('status');
+		$productName = $this->input->post('sort_order');
+		$productName = $this->input->post('manufacturer');
+		$productName = $this->input->post('category');
+		$productName = $this->input->post('filter');
+		$productName = $this->input->post('related');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+		$productName = $this->input->post('');
+
+		echo $productName;
+		exit();
 	}
 	public function product()
 	{
