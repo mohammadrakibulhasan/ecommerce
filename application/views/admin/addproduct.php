@@ -1,428 +1,309 @@
 <div class="container">
     <h1 class="text-center">Add Product</h1>
     <button type="submit" form="form-product" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Save" aria-label="Save"><i class="fas fa-save"></i></button>
+    <br> <br>
     <!-- Nav tabs -->
-    <form id="form-product" action="<?=base_url().'admin/addprod'?>" method="post" data-oc-toggle="ajax">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="general-tab" data-toggle="tab" data-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="data-tab" data-toggle="tab" data-target="#data" type="button" role="tab" aria-controls="data" aria-selected="false">Data</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="links-tab" data-toggle="tab" data-target="#links" type="button" role="tab" aria-controls="links" aria-selected="false">Links</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="attribute-tab" data-toggle="tab" data-target="#attribute" type="button" role="tab" aria-controls="attribute" aria-selected="false">Attribute</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="option-tab" data-toggle="tab" data-target="#option" type="button" role="tab" aria-controls="option" aria-selected="false">Option</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="discount-tab" data-toggle="tab" data-target="#discount" type="button" role="tab" aria-controls="discount" aria-selected="false">Discount</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="special-tab" data-toggle="tab" data-target="#special" type="button" role="tab" aria-controls="special" aria-selected="false">Special</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="image-tab" data-toggle="tab" data-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Image</button>
-        </li>
-    </ul>
-    <hr>
-    <br>
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div class="tab-pane active" id="general" role="tabpanel" aria-labelledby="general-tab">
-            General
-            <hr>
-            <div class="row mb-3 required">
-                <label for="input-name-1" class="col-sm-2 col-form-label">Product Name</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="product_description[1][name]" placeholder="Product Name" id="input-name-1" class="form-control">
+    <form id="form-product" action="<?= base_url() . 'admin/addprod' ?>" method="post" enctype="multipart/form-data" data-oc-toggle="ajax">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="general-tab" data-toggle="tab" data-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="data-tab" data-toggle="tab" data-target="#data" type="button" role="tab" aria-controls="data" aria-selected="false">Data</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="links-tab" data-toggle="tab" data-target="#links" type="button" role="tab" aria-controls="links" aria-selected="false">Links</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="attribute-tab" data-toggle="tab" data-target="#attribute" type="button" role="tab" aria-controls="attribute" aria-selected="false">Attribute</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="option-tab" data-toggle="tab" data-target="#option" type="button" role="tab" aria-controls="option" aria-selected="false">Option</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="discount-tab" data-toggle="tab" data-target="#discount" type="button" role="tab" aria-controls="discount" aria-selected="false">Discount</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="special-tab" data-toggle="tab" data-target="#special" type="button" role="tab" aria-controls="special" aria-selected="false">Special</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="image-tab" data-toggle="tab" data-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Image</button>
+            </li>
+        </ul>
+        <hr>
+        <br>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                General
+                <hr>
+                <div class="row mb-3 required">
+                    <label for="input-name-1" class="col-sm-2 col-form-label">Product Name</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="product_description[1][name]" placeholder="Product Name" id="input-name-1" class="form-control">
+                        </div>
+                        <div id="error-name-1" class="invalid-feedback"></div>
                     </div>
-                    <div id="error-name-1" class="invalid-feedback"></div>
+                </div>
+                <hr>
+                <div class="row mb-3 required">
+                    <label for="input-meta-title-1" class="col-sm-2 col-form-label">Product Description</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="product_description[1][product_description]" placeholder="Product Description" id="input-product-description-1" class="form-control">
+                        </div>
+                        <div id="error-product-description-1" class="invalid-feedback"></div>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <div class="row mb-3 required">
-                <label for="input-meta-title-1" class="col-sm-2 col-form-label">Product Description</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="product_description[1][product_description]" placeholder="Product Description" id="input-product-description-1" class="form-control">
-                    </div>
-                    <div id="error-product-description-1" class="invalid-feedback"></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="tab-pane" id="data" role="tabpanel" aria-labelledby="data-tab">
-            Data
-            <hr>
-            <div class="row mb-3 required">
-                <label for="input-model-1" class="col-sm-2 col-form-label">Model</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="product_description[1][model]" placeholder="Product Model" id="input-model-1" class="form-control">
-                    </div>
-                    <div id="error-model-1" class="invalid-feedback"></div>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label for="input-sku" class="col-sm-2 col-form-label">SKU</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="sku" value="" placeholder="SKU" id="input-sku" class="form-control">
-                    </div>
-                    <div class="form-text">Stock Keeping Unit</div>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label for="input-upc" class="col-sm-2 col-form-label">UPC</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="upc" value="" placeholder="UPC" id="input-upc" class="form-control">
-                    </div>
-                    <div class="form-text">Universal Product Code</div>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <label for="input-location" class="col-sm-2 col-form-label">Location</label>
-                <div class="col-sm-10">
-                    <div class="input-group">
-                        <input type="text" name="location" value="" placeholder="Location" id="input-location" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <fieldset>
-                <legend>Price</legend>
-                <div class="row mb-3">
-                    <label for="input-price" class="col-sm-2 col-form-label">Price</label>
+            <div class="tab-pane" id="data" role="tabpanel" aria-labelledby="data-tab">
+                Data
+                <hr>
+                <div class="row mb-3 required">
+                    <label for="input-model-1" class="col-sm-2 col-form-label">Model</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="price" value="" placeholder="Price" id="input-price" class="form-control">
+                            <input type="text" name="product_description[1][model]" placeholder="Product Model" id="input-model-1" class="form-control">
+                        </div>
+                        <div id="error-model-1" class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <label for="input-sku" class="col-sm-2 col-form-label">SKU</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="sku" value="" placeholder="SKU" id="input-sku" class="form-control">
+                        </div>
+                        <div class="form-text">Stock Keeping Unit</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <label for="input-upc" class="col-sm-2 col-form-label">UPC</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="upc" value="" placeholder="UPC" id="input-upc" class="form-control">
+                        </div>
+                        <div class="form-text">Universal Product Code</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <label for="input-location" class="col-sm-2 col-form-label">Location</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="location" value="" placeholder="Location" id="input-location" class="form-control">
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="input-tax-class" class="col-sm-2 col-form-label">Tax Class</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <select name="tax_class_id" id="input-tax-class" class="form-select">
-                                <option value="0"> --- None --- </option>
-                                <option value="9">Taxable Goods</option>
-                                <option value="10">Downloadable Products</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-            <hr>
-            <fieldset>
-                <legend>Stock</legend>
-                <div class="row mb-3">
-                    <label for="input-quantity" class="col-sm-2 col-form-label">Quantity</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="quantity" value="1" placeholder="Quantity" id="input-quantity" class="form-control">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-minimum" class="col-sm-2 col-form-label">Minimum Quantity</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <input type="text" name="minimum" value="1" placeholder="Minimum Quantity" id="input-minimum" class="form-control">
-                        </div>
-                        <div class="form-text">Force a minimum ordered amount</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Subtract Stock</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <div id="input-subtract" class="form-check form-switch form-switch-lg">
-                                <input type="checkbox" name="subtract" class="form-check-input">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-stock-status" class="col-sm-2 col-form-label">Out Of Stock Status</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <select name="stock_status_id" id="input-stock-status" class="form-select">
-                                <option value="6">2-3 Days</option>
-                                <option value="7">In Stock</option>
-                                <option value="5">Out Of Stock</option>
-                                <option value="8">Pre-Order</option>
-                            </select>
-                        </div>
-                        <div class="form-text">Status shown when a product is out of stock</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-date-available" class="col-sm-2 col-form-label">Date Available</label>
-                    <div class="col-sm-10 col-md-4">
-                        <div class="input-group">
-                            <input type="date" name="date_available" value="2023-04-08" placeholder="Date Available" id="input-date-available" class="form-control date">
-                            <div class="input-group-text"></div>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-            <hr>
-            <fieldset>
-                <legend>Specification</legend>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Requires Shipping</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <div id="input-shipping" class="form-check form-switch form-switch-lg">
-                                <input type="checkbox" name="shipping" class="form-check-input">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-length" class="col-sm-2 col-form-label">Dimensions (L x W x H)</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <input type="text" name="length" value="" placeholder="Length" id="input-length" class="form-control">
-                            <input type="text" name="width" value="" placeholder="Width" id="input-width" class="form-control">
-                            <input type="text" name="height" value="" placeholder="Height" id="input-height" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-length-class" class="col-sm-2 col-form-label">Length Class</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <select name="length_class_id" id="input-length-class" class="form-select">
-                                <option value="1" selected="">Centimeter</option>
-                                <option value="2">Millimeter</option>
-                                <option value="3">Inch</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-weight" class="col-sm-2 col-form-label">Weight</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <input type="text" name="weight" value="" placeholder="Weight" id="input-weight" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-weight-class" class="col-sm-2 col-form-label">Weight Class</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <select name="weight_class_id" id="input-weight-class" class="form-select">
-                                <option value="1" selected="">Kilogram</option>
-                                <option value="2">Gram</option>
-                                <option value="5">Pound </option>
-                                <option value="6">Ounce</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-status" class="col-sm-2 col-form-label">Status</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <select name="status" id="input-status" class="form-select">
-                                <option value="1" selected="selected">Enabled</option>
-                                <option value="0">Disabled</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="input-sort-order" class="col-sm-2 col-form-label">Sort Order</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <input type="text" name="sort_order" value="1" placeholder="Sort Order" id="input-sort-order" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="tab-pane" id="links" role="tabpanel" aria-labelledby="links-tab">
-            Links
-            <hr>
-            <div id="tab-links" class="tab-pane active">
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Manufacturer</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                            <input type="text" name="manufacturer" value="" placeholder="Manufacturer" id="input-manufacturer" list="list-manufacturer" class="form-control">
-                        </div>
-                        <input type="hidden" name="manufacturer_id" value="0" id="input-manufacturer-id">
-                        <datalist id="list-manufacturer"></datalist>
-                        <div class="form-text">(Autocomplete)</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Categories</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="category" value="" placeholder="Categories" id="input-category" list="list-category" class="form-control">
-                        <datalist id="list-category"></datalist>
-                        <div class="input-group">
-                            <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                                <table id="product-category" class="table table-sm m-0">
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="form-text">(Autocomplete)</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Filters</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="filter" value="" placeholder="Filters" id="input-filter" list="list-filter" class="form-control">
-                        <datalist id="list-filter"></datalist>
-                        <div class="input-group">
-                            <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                                <table id="product-filter" class="table table-sm m-0">
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="form-text">(Autocomplete)</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Related Products</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="related" value="" placeholder="Related Products" id="input-related" list="list-related" class="form-control">
-                        <datalist id="list-related"></datalist>
-                        <div class="input-group">
-                            <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                                <table id="product-related" class="table table-sm m-0">
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="form-text">(Autocomplete)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="attribute" role="tabpanel" aria-labelledby="attribute-tab">
-            Attribute
-            <hr>
-        </div>
-        <div class="tab-pane" id="option" role="tabpanel" aria-labelledby="option-tab">Option</div>
-        <div class="tab-pane" id="discount" role="tabpanel" aria-labelledby="discount-tab">
-            Discount
-            <hr>
-            <div id="tab-discount" class="tab-pane active">
-                <div class="table-responsive">
-                    <table id="product-discount" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <td class="text-start">Customer Group</td>
-                                <td class="text-end">Quantity</td>
-                                <td class="text-end">Priority</td>
-                                <td class="text-end">Price</td>
-                                <td class="text-start">Date Start</td>
-                                <td class="text-start">Date End</td>
-                                <td class="text-end"></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr id="discount-row-1">
-                                <td class="text-start"><select name="product_discount[1][customer_group_id]" class="form-select">
-                                        <option value="1">Default</option>
-                                    </select><input type="hidden" name="product_discount[1][product_discount_id]" value=""></td>
-                                <td class="text-end"><input type="text" name="product_discount[1][quantity]" value="" placeholder="Quantity" class="form-control"></td>
-                                <td class="text-end"><input type="text" name="product_discount[1][priority]" value="" placeholder="Priority" class="form-control"></td>
-                                <td class="text-end"><input type="text" name="product_discount[1][price]" value="" placeholder="Price" class="form-control"></td>
-                                <td class="text-start">
-                                    <div class="input-group"><input type="text" name="product_discount[1][date_start]" value="" placeholder="Date Start" class="form-control date">
-                                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                                    </div>
-                                </td>
-                                <td class="text-start">
-                                    <div class="input-group"><input type="text" name="product_discount[1][date_end]" value="" placeholder="Date End" class="form-control date">
-                                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                                    </div>
-                                </td>
-                                <td class="text-end"><button type="button" onclick="$('#discount-row-1').remove();" data-bs-toggle="tooltip" title="" class="btn btn-danger" data-bs-original-title="Remove" aria-label="Remove"><i class="fas fa-minus-circle"></i></button></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="6"></td>
-                                <td class="text-end"><button type="button" id="button-discount" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Discount" aria-label="Add Discount"><i class="fas fa-plus-circle"></i></button></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="special" role="tabpanel" aria-labelledby="special-tab">
-            Special
-            <hr>
-            <div id="tab-special" class="tab-pane">
-                <div class="table-responsive">
-                    <table id="product-special" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <td class="text-start">Customer Group</td>
-                                <td class="text-end">Priority</td>
-                                <td class="text-end">Price</td>
-                                <td class="text-start">Date Start</td>
-                                <td class="text-start">Date End</td>
-                                <td class="text-center"></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5"></td>
-                                <td class="text-end"><button type="button" id="button-special" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Special" aria-label="Add Special"><i class="fas fa-plus-circle"></i></button></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="image" role="tabpanel" aria-labelledby="image-tab">
-            Image
-            <hr>
-            <div id="tab-image" class="tab-pane">
+                <hr>
                 <fieldset>
-                    <legend>Image</legend>
-                    <div class="row">
-                        <div class="col-sm-4 col-md-3 mb-3">
-                            <div id="image" class="card image">
-                                <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"> <input type="hidden" name="image" value="" id="input-image">
-                                <div class="card-body">
-                                    <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> Edit</button>
-                                    <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>
-                                </div>
+                    <legend>Price</legend>
+                    <div class="row mb-3">
+                        <label for="input-price" class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="price" value="" placeholder="Price" id="input-price" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-tax-class" class="col-sm-2 col-form-label">Tax Class</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <select name="tax_class_id" id="input-tax-class" class="form-select">
+                                    <option value="0"> --- None --- </option>
+                                    <option value="9">Taxable Goods</option>
+                                    <option value="10">Downloadable Products</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </fieldset>
+                <hr>
                 <fieldset>
-                    <legend>Additional Images</legend>
+                    <legend>Stock</legend>
+                    <div class="row mb-3">
+                        <label for="input-quantity" class="col-sm-2 col-form-label">Quantity</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="quantity" value="1" placeholder="Quantity" id="input-quantity" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-minimum" class="col-sm-2 col-form-label">Minimum Quantity</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="minimum" value="1" placeholder="Minimum Quantity" id="input-minimum" class="form-control">
+                            </div>
+                            <div class="form-text">Force a minimum ordered amount</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Subtract Stock</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div id="input-subtract" class="form-check form-switch form-switch-lg">
+                                    <input type="checkbox" value="1" checked name="subtract" class="form-check-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-stock-status" class="col-sm-2 col-form-label">Out Of Stock Status</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <select name="stock_status_id" id="input-stock-status" class="form-select">
+                                    <option value="6">2-3 Days</option>
+                                    <option value="7">In Stock</option>
+                                    <option value="5">Out Of Stock</option>
+                                    <option value="8">Pre-Order</option>
+                                </select>
+                            </div>
+                            <div class="form-text">Status shown when a product is out of stock</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-date-available" class="col-sm-2 col-form-label">Date Available</label>
+                        <div class="col-sm-10 col-md-4">
+                            <div class="input-group">
+                                <input type="date" name="date_available" value="2023-04-08" placeholder="Date Available" id="input-date-available" class="form-control date">
+                                <div class="input-group-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <hr>
+                <fieldset>
+                    <legend>Specification</legend>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Requires Shipping</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div id="input-shipping" class="form-check form-switch form-switch-lg">
+                                    <input type="checkbox" value="1" checked name="shipping" class="form-check-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-length" class="col-sm-2 col-form-label">Dimensions (L x W x H)</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="length" value="" placeholder="Length" id="input-length" class="form-control">
+                                <input type="text" name="width" value="" placeholder="Width" id="input-width" class="form-control">
+                                <input type="text" name="height" value="" placeholder="Height" id="input-height" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-length-class" class="col-sm-2 col-form-label">Length Class</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <select name="length_class_id" id="input-length-class" class="form-select">
+                                    <option value="1" selected="">Centimeter</option>
+                                    <option value="2">Millimeter</option>
+                                    <option value="3">Inch</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-weight" class="col-sm-2 col-form-label">Weight</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="weight" value="" placeholder="Weight" id="input-weight" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-weight-class" class="col-sm-2 col-form-label">Weight Class</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <select name="weight_class_id" id="input-weight-class" class="form-select">
+                                    <option value="1" selected="">Kilogram</option>
+                                    <option value="2">Gram</option>
+                                    <option value="5">Pound </option>
+                                    <option value="6">Ounce</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-status" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <select name="status" id="input-status" class="form-select">
+                                    <option value="1" selected="selected">Enabled</option>
+                                    <option value="0">Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="input-sort-order" class="col-sm-2 col-form-label">Sort Order</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="sort_order" value="1" placeholder="Sort Order" id="input-sort-order" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="tab-pane" id="links" role="tabpanel" aria-labelledby="links-tab">
+                Links
+                <hr>
+                <div id="tab-links" class="tab-pane active">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Manufacturer</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" name="manufacturer" value="" placeholder="Manufacturer" id="input-manufacturer" list="list-manufacturer" class="form-control">
+                            </div>
+                            <input type="hidden" name="manufacturer_id" value="0" id="input-manufacturer-id">
+                            <datalist id="list-manufacturer"></datalist>
+                            <div class="form-text">(Autocomplete)</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Categories</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="category" value="" placeholder="Categories" id="input-category" list="list-category" class="form-control">
+                            <datalist id="list-category"></datalist>
+                            <div class="input-group">
+                                <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                                    <table id="product-category" class="table table-sm m-0">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-text">(Autocomplete)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="attribute" role="tabpanel" aria-labelledby="attribute-tab">
+                Attribute
+                <hr>
+            </div>
+            <div class="tab-pane" id="option" role="tabpanel" aria-labelledby="option-tab">Option</div>
+            <div class="tab-pane" id="discount" role="tabpanel" aria-labelledby="discount-tab">
+                Discount
+                <hr>
+                <div id="tab-discount" class="tab-pane active">
                     <div class="table-responsive">
-                        <table id="product-image" class="table table-bordered table-hover">
+                        <table id="product-discount" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <td class="text-start">Image</td>
-                                    <td class="text-start">Sort Order</td>
+                                    <td class="text-start">Customer Group</td>
+                                    <td class="text-end">Quantity</td>
+                                    <td class="text-end">Priority</td>
+                                    <td class="text-end">Price</td>
+                                    <td class="text-start">Date Start</td>
+                                    <td class="text-start">Date End</td>
                                     <td class="text-end"></td>
                                 </tr>
                             </thead>
@@ -430,21 +311,181 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="2"></td>
-                                    <td class="text-end"><button type="button" id="button-image" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Image" aria-label="Add Image"><i class="fas fa-plus-circle"></i></button></td>
+                                    <td colspan="6"></td>
+                                    <td class="text-end"><button type="button" id="button-discount" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Discount" aria-label="Add Discount"><i class="fas fa-plus-circle"></i></button></td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-                </fieldset>
+                </div>
+            </div>
+            <div class="tab-pane" id="special" role="tabpanel" aria-labelledby="special-tab">
+                Special
+                <hr>
+                <div id="tab-special" class="tab-pane">
+                    <div class="table-responsive">
+                        <table id="product-special" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td class="text-start">Customer Group</td>
+                                    <td class="text-end">Priority</td>
+                                    <td class="text-end">Price</td>
+                                    <td class="text-start">Date Start</td>
+                                    <td class="text-start">Date End</td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5"></td>
+                                    <td class="text-end"><button type="button" id="button-special" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Special" aria-label="Add Special"><i class="fas fa-plus-circle"></i></button></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="image" role="tabpanel" aria-labelledby="image-tab">
+                Image
+                <hr>
+                <div id="tab-image" class="tab-pane">
+                    <fieldset>
+                        <legend>Image</legend>
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3 mb-3">
+                                <div id="image" class="card image">
+                                    <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"> <input type="hidden" name="image" value="" id="input-image">
+                                    <div class="card-body">
+                                    <input type="file" id="myfile" name="myfile">
+                                        <!-- <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> Edit</button> -->
+                                        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Additional Images</legend>
+                        <div class="table-responsive">
+                            <table id="product-image" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <td class="text-start">Image</td>
+                                        <td class="text-start">Sort Order</td>
+                                        <td class="text-end"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td class="text-end"><button type="button" id="button-image" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Image" aria-label="Add Image"><i class="fas fa-plus-circle"></i></button></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
         </div>
-    </div>
     </form>
 
 </div>
 
-<script type="text/javascript">
+<script>
+    $(document).ready(function() {
+
+
+        var discount_row = 0;
+
+        $('#button-discount').on('click', function() {
+            html = '<tr id="discount-row-' + discount_row + '">';
+            html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
+            html += '    <option value="1">Default</option>';
+            html += '  </select><input type="hidden" name="product_discount[' + discount_row + '][product_discount_id]" value=""/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="Quantity" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#product-discount tbody').append(html);
+
+            discount_row++;
+        });
+        var special_row = 0;
+
+        $('#button-special').on('click', function() {
+            html = '<tr id="special-row-' + special_row + '">';
+            html += '  <td class="text-start"><select name="product_special[' + special_row + '][customer_group_id]" class="form-select">';
+            html += '      <option value="1">Default</option>';
+            html += '  </select><input type="hidden" name="product_special[' + special_row + '][product_special_id]" value=""/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special[' + special_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special[' + special_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-end"><button type="button" onclick="$(\'#special-row-' + special_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#product-special tbody').append(html);
+
+            special_row++;
+        });
+
+        var image_row = 0;
+
+        $('#button-image').on('click', function() {
+            html = '<tr id="product-image-row-' + image_row + '">';
+            html += '  <td><div class="card image">';
+            html += '    <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-product-image-' + image_row + '"/>';
+            html += '    <div class="card-body">';
+            html += '      <input type="file" id="myfile" name="myfile">';
+            html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>';
+            html += '    </div>';
+            html += '  </div></td>';
+            html += '  <td class="text-start"><input type="text" name="product_image[' + image_row + '][sort_order]" value="0" placeholder="Sort Order" class="form-control"/></td>';
+            html += '  <td class="text-end"><button type="button" onclick="$(\'#product-image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#product-image tbody').append(html);
+
+            image_row++;
+        });
+
+        // $(document).on('submit', '#updateForm', function(e) {
+        //     e.preventDefault();
+        //     var id = $(this).find("input[name='id']").val();
+        //     var category = $(this).find("input[name='catname']").val();
+
+        //     // console.log(id+category);
+        //     $.ajax({
+        //         method: "POST",
+        //         url: "<?= base_url() . 'admin/updatecategory' ?>",
+        //         data: {
+        //             id: id,
+        //             category: category
+        //         },
+        //         success: function(data) {
+        //             // $('#wrap').load('#wrap');
+        //             $('#msg').html(data);
+        //             $("#close").click();
+        //             $("#wrap").load(location.href + " #wrap");
+        //             // alert(id+category)
+
+        //         }
+        //     });
+        // });
+
+
+    });
+</script>
+
+<!-- <script type="text/javascript">
     $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
     // Manufacturer
@@ -1026,5 +1067,5 @@
 
         $('#report').load(this.href);
     });
-    //-->
-</script>
+
+</script> -->

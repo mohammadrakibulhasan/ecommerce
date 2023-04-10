@@ -101,43 +101,38 @@ class Admin extends CI_Controller
 
 	public function addprod()
 	{
-		$productName = $this->input->post('product_description[1][name]');
-		$productName = $this->input->post('product_description[1][product_description]');
-		$productName = $this->input->post('product_description[1][model]');
-		$productName = $this->input->post('sku');
-		$productName = $this->input->post('upc');
-		$productName = $this->input->post('location');
-		$productName = $this->input->post('price');
-		$productName = $this->input->post('tax_class_id');
-		$productName = $this->input->post('quantity');
-		$productName = $this->input->post('minimum');
-		$productName = $this->input->post('subtract');
-		$productName = $this->input->post('stock_status_id');
-		$productName = $this->input->post('date_available');
-		$productName = $this->input->post('shipping');
-		$productName = $this->input->post('length');
-		$productName = $this->input->post('width');
-		$productName = $this->input->post('height');
-		$productName = $this->input->post('length_class_id');
-		$productName = $this->input->post('weight');
-		$productName = $this->input->post('weight_class_id');
-		$productName = $this->input->post('status');
-		$productName = $this->input->post('sort_order');
-		$productName = $this->input->post('manufacturer');
-		$productName = $this->input->post('category');
-		$productName = $this->input->post('filter');
-		$productName = $this->input->post('related');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
-		$productName = $this->input->post('');
+		$data = [
 
-		echo $productName;
+		'productName' => $this->input->post('product_description[1][name]'),
+		'productDescription' => $this->input->post('product_description[1][product_description]'),
+		'productModel' => $this->input->post('product_description[1][model]'),
+		'SKU' => $this->input->post('sku'),
+		'UPC' => $this->input->post('upc'),
+		'location' => $this->input->post('location'),
+		'price' => $this->input->post('price'),
+		'taxClass' => $this->input->post('tax_class_id'),
+		'quantity' => $this->input->post('quantity'),
+		'minimum' => $this->input->post('minimum'),
+		'subtract' => $this->input->post('subtract'),
+		'stock' => $this->input->post('stock_status_id'),
+		'dateAvailable' => $this->input->post('date_available'),
+		'shipping' => $this->input->post('shipping'),
+		'length' => $this->input->post('length'),
+		'width' => $this->input->post('width'),
+		'height' => $this->input->post('height'),
+		'lengthClass' => $this->input->post('length_class_id'),
+		'weight' => $this->input->post('weight'),
+		'weightClass' => $this->input->post('weight_class_id'),
+		'status' => $this->input->post('status'),
+		'sortOrder' => $this->input->post('sort_order'),
+		'manufacturer' => $this->input->post('manufacturer'),
+		'category' => $this->input->post('category'),
+		'discount' => $this->input->post("product_discount[][]"),
+
+	];
+
+		echo '<pre>';
+		print_r($data);
 		exit();
 	}
 	public function product()
