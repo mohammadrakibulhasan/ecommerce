@@ -103,36 +103,103 @@ class Admin extends CI_Controller
 	{
 		$data = [
 
-		'productName' => $this->input->post('product_description[1][name]'),
-		'productDescription' => $this->input->post('product_description[1][product_description]'),
-		'productModel' => $this->input->post('product_description[1][model]'),
-		'SKU' => $this->input->post('sku'),
-		'UPC' => $this->input->post('upc'),
-		'location' => $this->input->post('location'),
-		'price' => $this->input->post('price'),
-		'taxClass' => $this->input->post('tax_class_id'),
-		'quantity' => $this->input->post('quantity'),
-		'minimum' => $this->input->post('minimum'),
-		'subtract' => $this->input->post('subtract'),
-		'stock' => $this->input->post('stock_status_id'),
-		'dateAvailable' => $this->input->post('date_available'),
-		'shipping' => $this->input->post('shipping'),
-		'length' => $this->input->post('length'),
-		'width' => $this->input->post('width'),
-		'height' => $this->input->post('height'),
-		'lengthClass' => $this->input->post('length_class_id'),
-		'weight' => $this->input->post('weight'),
-		'weightClass' => $this->input->post('weight_class_id'),
-		'status' => $this->input->post('status'),
-		'sortOrder' => $this->input->post('sort_order'),
-		'manufacturer' => $this->input->post('manufacturer'),
-		'category' => $this->input->post('category'),
-		'discount' => $this->input->post("product_discount[][]"),
+			'productName' => $this->input->post('product_description[1][name]'),
+			'productDescription' => $this->input->post('product_description[1][product_description]'),
+			'productModel' => $this->input->post('product_description[1][model]'),
+			'SKU' => $this->input->post('sku'),
+			'UPC' => $this->input->post('upc'),
+			'location' => $this->input->post('location'),
+			'price' => $this->input->post('price'),
+			'taxClass' => $this->input->post('tax_class_id'),
+			'quantity' => $this->input->post('quantity'),
+			'minimum' => $this->input->post('minimum'),
+			'subtract' => $this->input->post('subtract'),
+			'stock' => $this->input->post('stock_status_id'),
+			'dateAvailable' => $this->input->post('date_available'),
+			'shipping' => $this->input->post('shipping'),
+			'length' => $this->input->post('length'),
+			'width' => $this->input->post('width'),
+			'height' => $this->input->post('height'),
+			'lengthClass' => $this->input->post('length_class_id'),
+			'weight' => $this->input->post('weight'),
+			'weightClass' => $this->input->post('weight_class_id'),
+			'status' => $this->input->post('status'),
+			'sortOrder' => $this->input->post('sort_order'),
+			'manufacturer' => $this->input->post('manufacturer'),
+			'category' => $this->input->post('category'),
 
-	];
+		];
+		$i = 0;
+		
+		foreach ($this->input->post('product_discount[][]') as $k) {
+
+			$discount = [
+				'quantity' => $this->input->post('product_discount[' . $i . '][quantity]'),
+				'priority' => $this->input->post('product_discount[' . $i . '][priority]'),
+				'price' => $this->input->post('product_discount[' . $i . '][price]'),
+				'date_start' => $this->input->post('product_discount[' . $i . '][date_start]'),
+				'date_end' => $this->input->post('product_discount[' . $i . '][date_end]'),
+
+			];
+
+			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
+			// $discount['priority'] = $this->input->post('product_discount[' . $i . '][priority]');
+			// $discount['price'] = $this->input->post('product_discount[' . $i . '][price]');
+			// $discount['date_start'] = $this->input->post('product_discount[' . $i . '][date_start]');
+			// $discount['date_end'] = $this->input->post('product_discount[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($discount);
+		}
+		$i = 0;
+		foreach ($this->input->post('product_special[][]') as $k) {
+
+			$special = [
+				'priority' => $this->input->post('product_special[' . $i . '][priority]'),
+				'price' => $this->input->post('product_special[' . $i . '][price]'),
+				'date_start' => $this->input->post('product_special[' . $i . '][date_start]'),
+				'date_end' => $this->input->post('product_special[' . $i . '][date_end]'),
+
+			];
+
+			// $special['priority'] = $this->input->post('product_special[' . $i . '][priority]');
+			// $special['price'] = $this->input->post('product_special[' . $i . '][price]');
+			// $special['date_start'] = $this->input->post('product_special[' . $i . '][date_start]');
+			// $special['date_end'] = $this->input->post('product_special[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($special);
+		}
+
+		$config = array(
+			'upload_path' => "./assets/img/product/",
+			'allowed_types' => "jpg|png|jpeg|gif",
+			'max_size' => "2048000" // file size , here it is 1 MB(1024 Kb)
+		);
+		$this->upload->initialize($config);
+
+
+		if ($this->upload->do_upload('myfile')) {
+
+			$image = $this->upload->data();
+			echo '<pre>';
+			print_r($image);
+		}
+
+		// $special[][] = $this->input->post("product_special[][]");
+		// $image = $this->input->post("image");
+		// $addimage[][] = $this->input->post("product_image[][]");
 
 		echo '<pre>';
 		print_r($data);
+		// print_r($discount);
+
+		// echo $discount;
+		// print_r($discount . $special . $image . $addimage);
 		exit();
 	}
 	public function product()
@@ -149,17 +216,13 @@ class Admin extends CI_Controller
 		// $data['filter'] = 
 		$order = 'ASC';
 		$data['order'] = 'ASC';
-		if($this->input->get('sort') == 'desc')
-		{
-		$order = 'DESC';
-		$data['order'] = 'DESC';
-
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
 		}
-		if($this->input->get('sort') == 'asc')
-		{
-		$order = 'ASC';
-		$data['order'] = 'ASC';
-
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
 		}
 
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
@@ -328,32 +391,24 @@ class Admin extends CI_Controller
 		$data['order'] = 'ASC';
 		$count = '';
 		$data['count'] = '';
-		if($this->input->get('sort') == 'desc')
-		{
-		$order = 'DESC';
-		$data['order'] = 'DESC';
-
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
 		}
-		if($this->input->get('sort') == 'asc')
-		{
-		$order = 'ASC';
-		$data['order'] = 'ASC';
-
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
 		}
-		if($this->input->get('count') == 'desc')
-		{
-		$count = 'DESC';
-		$data['count'] = 'DESC';
-
+		if ($this->input->get('count') == 'desc') {
+			$count = 'DESC';
+			$data['count'] = 'DESC';
 		}
-		if($this->input->get('count') == 'asc')
-		{
-		$count = 'ASC';
-		$data['count'] = 'ASC';
-
+		if ($this->input->get('count') == 'asc') {
+			$count = 'ASC';
+			$data['count'] = 'ASC';
 		}
 
-		
+
 
 		$data['category'] = $this->Product_model->category($order, $count);
 
@@ -365,8 +420,7 @@ class Admin extends CI_Controller
 	public function multi()
 	{
 		// print_r($_POST['id']);
-		foreach($this->input->post('id') as $k => $val)
-		{
+		foreach ($this->input->post('id') as $k => $val) {
 			$id = $val;
 
 			echo 'id = ' . $id;
@@ -375,6 +429,6 @@ class Admin extends CI_Controller
 
 		// ok();
 
-		
+
 	}
 }

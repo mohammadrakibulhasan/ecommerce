@@ -169,7 +169,7 @@
                         <label for="input-date-available" class="col-sm-2 col-form-label">Date Available</label>
                         <div class="col-sm-10 col-md-4">
                             <div class="input-group">
-                                <input type="date" name="date_available" value="2023-04-08" placeholder="Date Available" id="input-date-available" class="form-control date">
+                                <input type="date" name="date_available"  placeholder="Date Available" id="input-date-available" class="form-control date">
                                 <div class="input-group-text"></div>
                             </div>
                         </div>
@@ -444,7 +444,7 @@
             html += '  <td><div class="card image">';
             html += '    <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-product-image-' + image_row + '"/>';
             html += '    <div class="card-body">';
-            html += '      <input type="file" id="myfile" name="myfile">';
+            html += '      <input type="file" id="addfile" name="product_image[' + image_row + '][addfile]">';
             html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>';
             html += '    </div>';
             html += '  </div></td>';
