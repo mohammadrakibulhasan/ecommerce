@@ -3,6 +3,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Product_model extends CI_Model
 {
 
+    public function add($data)
+    {
+        $query = $this->db->insert('products', $data);
+        return $query;
+    }
+    public function adddiscount($data)
+    {
+        $query = $this->db->insert('discount', $data);
+        return $query;
+    }
+    public function addspecial($data)
+    {
+        $query = $this->db->insert('special', $data);
+        return $query;
+    }
+    public function addimage($data)
+    {
+        $query = $this->db->insert('addimage', $data);
+        return $query;
+    }
+    public function getid()
+    {
+        $query = $this->db->order_by("id", "desc")->get('products');
+
+		return $query->first_row('array');
+    }
+
 
     public function getall($order='', $cat = '', $price = '')
     {

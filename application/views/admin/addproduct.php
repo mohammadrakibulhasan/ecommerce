@@ -444,7 +444,7 @@
             html += '  <td><div class="card image">';
             html += '    <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-product-image-' + image_row + '"/>';
             html += '    <div class="card-body">';
-            html += '      <input type="file" id="addfile" name="product_image[' + image_row + '][addfile]">';
+            html += '      <input type="file" id="product_image[' + image_row + '][addfile]" name="product_image[' + image_row + '][addfile]">';
             html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>';
             html += '    </div>';
             html += '  </div></td>';

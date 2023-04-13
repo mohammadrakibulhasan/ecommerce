@@ -101,6 +101,20 @@ class Admin extends CI_Controller
 
 	public function addprod()
 	{
+		$config = array(
+			'upload_path' => "./assets/img/product/",
+			'allowed_types' => "jpg|png|jpeg|gif",
+			'max_size' => "2048000" // file size , here it is 1 MB(1024 Kb)
+		);
+		$this->upload->initialize($config);
+
+
+		if ($this->upload->do_upload('myfile')) {
+
+			$image = $this->upload->data('file_name');
+			// echo '<pre>';
+			// print_r($image);
+		}
 		$data = [
 
 			'productName' => $this->input->post('product_description[1][name]'),
@@ -127,8 +141,12 @@ class Admin extends CI_Controller
 			'sortOrder' => $this->input->post('sort_order'),
 			'manufacturer' => $this->input->post('manufacturer'),
 			'category' => $this->input->post('category'),
+			'image' => $image,
 
 		];
+		$add = $this->Product_model->add($data);
+		$getid = $this->Product_model->getid($data);
+		$id = $getid['id'];
 		$i = 0;
 		
 		foreach ($this->input->post('product_discount[][]') as $k) {
@@ -139,8 +157,11 @@ class Admin extends CI_Controller
 				'price' => $this->input->post('product_discount[' . $i . '][price]'),
 				'date_start' => $this->input->post('product_discount[' . $i . '][date_start]'),
 				'date_end' => $this->input->post('product_discount[' . $i . '][date_end]'),
+				'productid' => $id,
 
 			];
+		$adddiscount = $this->Product_model->adddiscount($discount);
+
 
 			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
 			// $discount['priority'] = $this->input->post('product_discount[' . $i . '][priority]');
@@ -157,12 +178,15 @@ class Admin extends CI_Controller
 		foreach ($this->input->post('product_special[][]') as $k) {
 
 			$special = [
+				'productid' => $id,
 				'priority' => $this->input->post('product_special[' . $i . '][priority]'),
 				'price' => $this->input->post('product_special[' . $i . '][price]'),
 				'date_start' => $this->input->post('product_special[' . $i . '][date_start]'),
 				'date_end' => $this->input->post('product_special[' . $i . '][date_end]'),
 
 			];
+		$addspecial = $this->Product_model->addspecial($special);
+
 
 			// $special['priority'] = $this->input->post('product_special[' . $i . '][priority]');
 			// $special['price'] = $this->input->post('product_special[' . $i . '][price]');
@@ -175,32 +199,42 @@ class Admin extends CI_Controller
 			// print_r($special);
 		}
 
-		$config = array(
-			'upload_path' => "./assets/img/product/",
-			'allowed_types' => "jpg|png|jpeg|gif",
-			'max_size' => "2048000" // file size , here it is 1 MB(1024 Kb)
-		);
+
 		$this->upload->initialize($config);
+		$uploadDir = './assets/img/product/';
+		if(isset($_FILES['product_image'])) {
+			$fileCount = count($_FILES['product_image']['name']);
+			for($i=0; $i<$fileCount; $i++) {
+				$fileTmpPath = $_FILES['product_image']['tmp_name'][$i]['addfile'];
+				$fileName = $_FILES['product_image'
+				]['name'][$i]['addfile'];
+				$fileDestPath = $uploadDir . $fileName;
+				move_uploaded_file($fileTmpPath, $fileDestPath);
 
+				$aimage = [
+					'productid' => $id,
+					'image' => $fileName,	
+				];
+		$addimage = $this->Product_model->addimage($aimage);
 
-		if ($this->upload->do_upload('myfile')) {
-
-			$image = $this->upload->data();
-			echo '<pre>';
-			print_r($image);
+			}
 		}
 
 		// $special[][] = $this->input->post("product_special[][]");
 		// $image = $this->input->post("image");
 		// $addimage[][] = $this->input->post("product_image[][]");
+		//product_image[' + image_row + '][addfile]
 
-		echo '<pre>';
-		print_r($data);
+		// echo '<pre>';
+		// print_r($_FILES);
+		// print_r($_FILES['product_image']['name']);
+		// echo $_FILES;
+		// print_r($data);
 		// print_r($discount);
 
 		// echo $discount;
 		// print_r($discount . $special . $image . $addimage);
-		exit();
+		// exit();
 	}
 	public function product()
 	{
