@@ -1,9 +1,9 @@
 <div class="container">
     <h1 class="text-center">Add Product</h1>
-    <button type="submit" form="form-product" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Save" aria-label="Save"><i class="fas fa-save"></i></button>
+    <button  type="submit" form="form-product" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Save" aria-label="Save"><i class="fas fa-save"></i></button>
     <br> <br>
     <!-- Nav tabs -->
-    <form id="form-product" action="<?= base_url() . 'admin/addprod' ?>" method="post" enctype="multipart/form-data" data-oc-toggle="ajax">
+    <form id="form-product" action="<?= base_url() . 'admin/upprodvalue' ?>" method="post" enctype="multipart/form-data" data-oc-toggle="ajax">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="general-tab" data-toggle="tab" data-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
@@ -26,9 +26,9 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="special-tab" data-toggle="tab" data-target="#special" type="button" role="tab" aria-controls="special" aria-selected="false">Special</button>
             </li>
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
                 <button class="nav-link" id="image-tab" data-toggle="tab" data-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Image</button>
-            </li>
+            </li> -->
         </ul>
         <hr>
         <br>
@@ -36,12 +36,13 @@
         <div class="tab-content">
             <div class="tab-pane active" id="general" role="tabpanel" aria-labelledby="general-tab">
                 General
+                <input type="hidden" name="product_description[1][id]" value="<?= $product['id'] ?>">
                 <hr>
                 <div class="row mb-3 required">
                     <label for="input-name-1" class="col-sm-2 col-form-label">Product Name</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="product_description[1][name]" placeholder="Product Name" id="input-name-1" class="form-control">
+                            <input type="text" name="product_description[1][name]" placeholder="Product Name" id="input-name-1" class="form-control" value="<?= $product['productName'] ?>">
                         </div>
                         <div id="error-name-1" class="invalid-feedback"></div>
                     </div>
@@ -51,7 +52,7 @@
                     <label for="input-meta-title-1" class="col-sm-2 col-form-label">Product Description</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="product_description[1][product_description]" placeholder="Product Description" id="input-product-description-1" class="form-control">
+                            <input type="text" name="product_description[1][product_description]" placeholder="Product Description" id="input-product-description-1" class="form-control" value="<?= $product['productDescription'] ?>">
                         </div>
                         <div id="error-product-description-1" class="invalid-feedback"></div>
                     </div>
@@ -65,7 +66,7 @@
                     <label for="input-model-1" class="col-sm-2 col-form-label">Model</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="product_description[1][model]" placeholder="Product Model" id="input-model-1" class="form-control">
+                            <input type="text" name="product_description[1][model]" placeholder="Product Model" id="input-model-1" class="form-control" value="<?= $product['productModel'] ?>">
                         </div>
                         <div id="error-model-1" class="invalid-feedback"></div>
                     </div>
@@ -75,7 +76,7 @@
                     <label for="input-sku" class="col-sm-2 col-form-label">SKU</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="sku" value="" placeholder="SKU" id="input-sku" class="form-control">
+                            <input type="text" name="sku" placeholder="SKU" id="input-sku" class="form-control" value="<?= $product['SKU'] ?>">
                         </div>
                         <div class="form-text">Stock Keeping Unit</div>
                     </div>
@@ -85,7 +86,7 @@
                     <label for="input-upc" class="col-sm-2 col-form-label">UPC</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="upc" value="" placeholder="UPC" id="input-upc" class="form-control">
+                            <input type="text" name="upc" placeholder="UPC" id="input-upc" class="form-control" value="<?= $product['UPC'] ?>">
                         </div>
                         <div class="form-text">Universal Product Code</div>
                     </div>
@@ -95,7 +96,7 @@
                     <label for="input-location" class="col-sm-2 col-form-label">Location</label>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" name="location" value="" placeholder="Location" id="input-location" class="form-control">
+                            <input type="text" name="location" placeholder="Location" id="input-location" class="form-control" value="<?= $product['location'] ?>">
                         </div>
                     </div>
                 </div>
@@ -106,7 +107,7 @@
                         <label for="input-price" class="col-sm-2 col-form-label">Price</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="price" value="" placeholder="Price" id="input-price" class="form-control">
+                                <input type="text" name="price" placeholder="Price" id="input-price" class="form-control" value="<?= $product['price'] ?>">
                             </div>
                         </div>
                     </div>
@@ -116,7 +117,7 @@
                             <div class="input-group">
                                 <select name="tax_class_id" id="input-tax-class" class="form-select">
                                     <option value="0"> --- None --- </option>
-                                    <option value="9">Taxable Goods</option>
+                                    <option value="9" selected>Taxable Goods</option>
                                     <option value="10">Downloadable Products</option>
                                 </select>
                             </div>
@@ -129,14 +130,14 @@
                     <div class="row mb-3">
                         <label for="input-quantity" class="col-sm-2 col-form-label">Quantity</label>
                         <div class="col-sm-10">
-                            <input type="text" name="quantity" value="1" placeholder="Quantity" id="input-quantity" class="form-control">
+                            <input type="text" name="quantity" value="<?= $product['quantity'] ?>" placeholder="Quantity" id="input-quantity" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="input-minimum" class="col-sm-2 col-form-label">Minimum Quantity</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="minimum" value="1" placeholder="Minimum Quantity" id="input-minimum" class="form-control">
+                                <input type="text" name="minimum" value="<?= $product['minimum'] ?>" placeholder="Minimum Quantity" id="input-minimum" class="form-control">
                             </div>
                             <div class="form-text">Force a minimum ordered amount</div>
                         </div>
@@ -169,7 +170,7 @@
                         <label for="input-date-available" class="col-sm-2 col-form-label">Date Available</label>
                         <div class="col-sm-10 col-md-4">
                             <div class="input-group">
-                                <input type="date" name="date_available"  placeholder="Date Available" id="input-date-available" class="form-control date">
+                                <input type="date" name="date_available" value="<?= $product['dateAvailable'] ?>" placeholder="Date Available" id="input-date-available" class="form-control date">
                                 <div class="input-group-text"></div>
                             </div>
                         </div>
@@ -192,9 +193,11 @@
                         <label for="input-length" class="col-sm-2 col-form-label">Dimensions (L x W x H)</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="length" value="" placeholder="Length" id="input-length" class="form-control">
-                                <input type="text" name="width" value="" placeholder="Width" id="input-width" class="form-control">
-                                <input type="text" name="height" value="" placeholder="Height" id="input-height" class="form-control">
+                                <input type="text" name="length" value="<?= $product['length'] ?>" placeholder="Length" id="input-length" class="form-control">
+
+                                <input type="text" name="width" value="<?= $product['width'] ?>" placeholder="Width" id="input-width" class="form-control">
+
+                                <input type="text" name="height" value="<?= $product['height'] ?>" placeholder="Height" id="input-height" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -214,7 +217,7 @@
                         <label for="input-weight" class="col-sm-2 col-form-label">Weight</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="weight" value="" placeholder="Weight" id="input-weight" class="form-control">
+                                <input type="text" name="weight" value="<?= $product['weight'] ?>" placeholder="Weight" id="input-weight" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -260,7 +263,7 @@
                         <label class="col-sm-2 col-form-label">Manufacturer</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="manufacturer" value="" placeholder="Manufacturer" id="input-manufacturer" list="list-manufacturer" class="form-control">
+                                <input type="text" name="manufacturer" value="<?= $product['manufacturer'] ?>" placeholder="Manufacturer" id="input-manufacturer" list="list-manufacturer" class="form-control">
                             </div>
                             <input type="hidden" name="manufacturer_id" value="0" id="input-manufacturer-id">
                             <datalist id="list-manufacturer"></datalist>
@@ -270,7 +273,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Categories</label>
                         <div class="col-sm-10">
-                            <input type="text" name="category" value="" placeholder="Categories" id="input-category" list="list-category" class="form-control">
+                            <input type="text" name="category" value="<?= $product['category'] ?>" placeholder="Categories" id="input-category" list="list-category" class="form-control">
                             <datalist id="list-category">
                             <?php
                         foreach ($category as $cat) :
@@ -316,6 +319,36 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach ($discount as $dist) :
+                                ?>
+                                    <tr id="discount-row-<?= $dist['id'] ?>" class="<?= $dist['id'] ?>">
+                                        <td class="text-start"><select name="product_discount[discount-row-<?= $dist['id'] ?>][customer_group_id]" class="form-select">
+                                                <option value="1">Default</option>
+                                            </select><input type="hidden" name="product_discount[discount-row-<?= $dist['id'] ?>][product_discount_id]" value="<?= $dist['id'] ?>" /> <input type="hidden" name="product_discount[discount-row-<?= $dist['id'] ?>][product_id]" value="<?= $dist['productid'] ?>" /></td>
+
+                                        <td class="text-end"><input type="text" name="product_discount[discount-row-<?= $dist['id'] ?>][quantity]" value="<?= $dist['quantity'] ?>" placeholder="Quantity" class="form-control" /></td>
+
+                                        <td class="text-end"><input type="text" name="product_discount[discount-row-<?= $dist['id'] ?>][priority]" value="<?= $dist['priority'] ?>" placeholder="Priority" class="form-control" /></td>
+
+                                        <td class="text-end"><input type="text" name="product_discount[discount-row-<?= $dist['id'] ?>][price]" value="<?= $dist['price'] ?>" placeholder="Price" class="form-control" /></td>
+
+                                        <td class="text-start">
+                                            <div class="input-group"><input type="date" name="product_discount[discount-row-<?= $dist['id'] ?>][date_start]" value="<?= $dist['date_start'] ?>" placeholder="Date Start" class="form-control date" />
+                                                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                            </div>
+                                        </td>
+
+                                        <td class="text-start">
+                                            <div class="input-group"><input type="date" name="product_discount[discount-row-<?= $dist['id'] ?>][date_end]" value="<?= $dist['date_end'] ?>" placeholder="Date End" class="form-control date" />
+                                                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                            </div>
+                                        </td>
+
+                                        <td id="delete_discount" class="text-end"><button type="button" onclick="$('#discount-row-<?= $dist['id'] ?>' ).remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                                ?>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -342,8 +375,37 @@
                                     <td class="text-start">Date End</td>
                                     <td class="text-center"></td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                <tbody>
+                                <?php
+                                // echo "Today is " . date("Y-m-d") . "<br>";
+                                 foreach ($special as $sp) :
+                                ?>
+                                    <tr id="special-row-<?= $sp['id'] ?>" class="<?= $sp['id'] ?>">
+                                        <td class="text-start"><select name="product_special[special-row-<?= $sp['id'] ?>][customer_group_id]" class="form-select">
+                                                <option value="1">Default</option>
+                                            </select><input type="hidden" name="product_special[special-row-<?= $sp['id'] ?>][product_special_id]" value="<?= $sp['id'] ?>" /><input type="hidden" name="product_special[special-row-<?= $sp['id'] ?>][product_id]" value="<?= $sp['productid'] ?>" /></td>
+
+                                        <td class="text-end"><input type="text" name="product_special[special-row-<?= $sp['id'] ?>][priority]" value="<?= $sp['priority'] ?>" placeholder="Priority" class="form-control" /></td>
+
+                                        <td class="text-end"><input type="text" name="product_special[special-row-<?= $sp['id'] ?>][price]" value="<?= $sp['price'] ?>" placeholder="Price" class="form-control" /></td>
+
+                                        <td class="text-start">
+                                            <div class="input-group"><input type="date" name="product_special[special-row-<?= $sp['id'] ?>][date_start]" value="<?= $sp['date_start'] ?>" placeholder="Date Start" class="form-control date" />
+                                                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                            </div>
+                                        </td>
+
+                                        <td class="text-start">
+                                            <div class="input-group"><input type="date" name="product_special[special-row-<?= $sp['id'] ?>][date_end]" value="<?= $sp['date_end'] ?>" placeholder="Date End" class="form-control date" />
+                                                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                                            </div>
+                                        </td>
+
+                                        <td id="delete_special" class="text-end"><button type="button" onclick="$('#special-row-<?= $sp['id'] ?>' ).remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                                ?>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -366,7 +428,7 @@
                                 <div id="image" class="card image">
                                     <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"> <input type="hidden" name="image" value="" id="input-image">
                                     <div class="card-body">
-                                    <input type="file" id="myfile" name="myfile">
+                                        <input type="file" id="myfile" name="myfile">
                                         <!-- <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> Edit</button> -->
                                         <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>
                                     </div>
@@ -411,14 +473,14 @@
 
         $('#button-discount').on('click', function() {
             html = '<tr id="discount-row-' + discount_row + '">';
-            html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
+            html += '  <td class="text-start"><select name="product_discount_add[' + discount_row + '][customer_group_id]" class="form-select">';
             html += '    <option value="1">Default</option>';
-            html += '  </select><input type="hidden" name="product_discount[' + discount_row + '][product_discount_id]" value=""/></td>';
-            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="Quantity" class="form-control"/></td>';
-            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
-            html += '  <td class="text-end"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
-            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
-            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  </select><input type="hidden" name="product_discount_add[' + discount_row + '][product_discount_id]" value=""/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount_add[' + discount_row + '][quantity]" value="" placeholder="Quantity" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount_add[' + discount_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_discount_add[' + discount_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount_add[' + discount_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_discount_add[' + discount_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
             html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
             html += '</tr>';
 
@@ -430,13 +492,13 @@
 
         $('#button-special').on('click', function() {
             html = '<tr id="special-row-' + special_row + '">';
-            html += '  <td class="text-start"><select name="product_special[' + special_row + '][customer_group_id]" class="form-select">';
+            html += '  <td class="text-start"><select name="product_special_add[' + special_row + '][customer_group_id]" class="form-select">';
             html += '      <option value="1">Default</option>';
-            html += '  </select><input type="hidden" name="product_special[' + special_row + '][product_special_id]" value=""/></td>';
-            html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
-            html += '  <td class="text-end"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
-            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special[' + special_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
-            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special[' + special_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  </select><input type="hidden" name="product_special_add[' + special_row + '][product_special_id]" value=""/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_special_add[' + special_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
+            html += '  <td class="text-end"><input type="text" name="product_special_add[' + special_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special_add[' + special_row + '][date_start]" value="" placeholder="Date Start" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
+            html += '  <td class="text-start"><div class="input-group"><input type="date" name="product_special_add[' + special_row + '][date_end]" value="" placeholder="Date End" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></td>';
             html += '  <td class="text-end"><button type="button" onclick="$(\'#special-row-' + special_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
             html += '</tr>';
 
@@ -465,29 +527,56 @@
             image_row++;
         });
 
-        // $(document).on('submit', '#updateForm', function(e) {
-        //     e.preventDefault();
-        //     var id = $(this).find("input[name='id']").val();
-        //     var category = $(this).find("input[name='catname']").val();
+        $(document).on('click', '#delete_discount', function(e) {
+            e.preventDefault();
+            // var id = $(this).find("input[name='id']").val();
+            var id = $(this).parents("tr").attr("class");
+            alert(id);
+            // var category = $(this).find("input[name='catname']").val();
 
-        //     // console.log(id+category);
-        //     $.ajax({
-        //         method: "POST",
-        //         url: "<?= base_url() . 'admin/updatecategory' ?>",
-        //         data: {
-        //             id: id,
-        //             category: category
-        //         },
-        //         success: function(data) {
-        //             // $('#wrap').load('#wrap');
-        //             $('#msg').html(data);
-        //             $("#close").click();
-        //             $("#wrap").load(location.href + " #wrap");
-        //             // alert(id+category)
+            // console.log(id+category);
+            // $.ajax({
+            //     method: "POST",
+            //     url: "<?= base_url() . 'admin/updatecategory' ?>",
+            //     data: {
+            //         id: id,
+            //         category: category
+            //     },
+            //     success: function(data) {
+            //         // $('#wrap').load('#wrap');
+            //         $('#msg').html(data);
+            //         $("#close").click();
+            //         $("#wrap").load(location.href + " #wrap");
+            //         // alert(id+category)
 
-        //         }
-        //     });
-        // });
+            //     }
+            // });
+        });
+        $(document).on('click', '#delete_special', function(e) {
+            e.preventDefault();
+            // var id = $(this).find("input[name='id']").val();
+            var id = $(this).parents("tr").attr("class");
+            alert(id);
+            // var category = $(this).find("input[name='catname']").val();
+
+            // console.log(id+category);
+            // $.ajax({
+            //     method: "POST",
+            //     url: "<?= base_url() . 'admin/updatecategory' ?>",
+            //     data: {
+            //         id: id,
+            //         category: category
+            //     },
+            //     success: function(data) {
+            //         // $('#wrap').load('#wrap');
+            //         $('#msg').html(data);
+            //         $("#close").click();
+            //         $("#wrap").load(location.href + " #wrap");
+            //         // alert(id+category)
+
+            //     }
+            // });
+        });
 
 
     });

@@ -93,6 +93,7 @@ class Admin extends CI_Controller
 		$id = $this->session->userdata('id');
 
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		$data['category'] = $this->Product_model->getcategory();
 		// $data['category'] = $this->Product_model->category();
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/addproduct');
@@ -148,7 +149,7 @@ class Admin extends CI_Controller
 		$getid = $this->Product_model->getid($data);
 		$id = $getid['id'];
 		$i = 0;
-		
+
 		foreach ($this->input->post('product_discount[][]') as $k) {
 
 			$discount = [
@@ -160,7 +161,7 @@ class Admin extends CI_Controller
 				'productid' => $id,
 
 			];
-		$adddiscount = $this->Product_model->adddiscount($discount);
+			$adddiscount = $this->Product_model->adddiscount($discount);
 
 
 			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
@@ -185,7 +186,7 @@ class Admin extends CI_Controller
 				'date_end' => $this->input->post('product_special[' . $i . '][date_end]'),
 
 			];
-		$addspecial = $this->Product_model->addspecial($special);
+			$addspecial = $this->Product_model->addspecial($special);
 
 
 			// $special['priority'] = $this->input->post('product_special[' . $i . '][priority]');
@@ -202,21 +203,19 @@ class Admin extends CI_Controller
 
 		$this->upload->initialize($config);
 		$uploadDir = './assets/img/product/';
-		if(isset($_FILES['product_image'])) {
+		if (isset($_FILES['product_image'])) {
 			$fileCount = count($_FILES['product_image']['name']);
-			for($i=0; $i<$fileCount; $i++) {
+			for ($i = 0; $i < $fileCount; $i++) {
 				$fileTmpPath = $_FILES['product_image']['tmp_name'][$i]['addfile'];
-				$fileName = $_FILES['product_image'
-				]['name'][$i]['addfile'];
+				$fileName = $_FILES['product_image']['name'][$i]['addfile'];
 				$fileDestPath = $uploadDir . $fileName;
 				move_uploaded_file($fileTmpPath, $fileDestPath);
 
 				$aimage = [
 					'productid' => $id,
-					'image' => $fileName,	
+					'image' => $fileName,
 				];
-		$addimage = $this->Product_model->addimage($aimage);
-
+				$addimage = $this->Product_model->addimage($aimage);
 			}
 		}
 
@@ -235,6 +234,225 @@ class Admin extends CI_Controller
 		// echo $discount;
 		// print_r($discount . $special . $image . $addimage);
 		// exit();
+	}
+
+	public function upprod()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+
+		$data['title'] = 'Product';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$pid = $this->input->get('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		// $data['manufacturer'] = $this->Product_model->getmanufacturer();
+		$data['category'] = $this->Product_model->getcategory();
+		$data['product'] = $this->Product_model->getproduct($pid);
+		$data['discount'] = $this->Product_model->getdiscount($pid);
+		$data['special'] = $this->Product_model->getspecialrow($pid);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/updateproduct');
+		$this->load->view('admin/footer');
+	}
+	public function upprodvalue()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		if ($this->input->post('product_discount_add[][]')) {
+
+			$i = 0;
+			foreach ($this->input->post('product_discount_add[][]') as $k) {
+
+				$discount = [
+					'quantity' => $this->input->post('product_discount_add[' . $i . '][quantity]'),
+					'priority' => $this->input->post('product_discount_add[' . $i . '][priority]'),
+					'price' => $this->input->post('product_discount_add[' . $i . '][price]'),
+					'date_start' => $this->input->post('product_discount_add[' . $i . '][date_start]'),
+					'date_end' => $this->input->post('product_discount_add[' . $i . '][date_end]'),
+					'productid' => $this->input->post('product_description[1][id]'),
+
+				];
+				// $productid = $this->input->post('product_description[1][id]');
+				$editdiscountadd = $this->Product_model->editdiscountadd($discount);
+
+				$i = $i + 1;
+				// echo $discount;
+			// echo '<pre>';
+			// print_r($_POST);
+			// print_r($discount);
+		}
+		// exit();
+
+		}
+
+		if ($this->input->post('product_special_add[][]')) {
+
+			$i = 0;
+			foreach ($this->input->post('product_special_add[][]') as $k) {
+
+				$special = [
+					'priority' => $this->input->post('product_special_add[' . $i . '][priority]'),
+					'price' => $this->input->post('product_special_add[' . $i . '][price]'),
+					'date_start' => $this->input->post('product_special_add[' . $i . '][date_start]'),
+					'date_end' => $this->input->post('product_special_add[' . $i . '][date_end]'),
+					'productid' => $this->input->post('product_description[1][id]'),
+
+				];
+				// $productid = $this->input->post('product_description[1][id]');
+				$editspecialadd = $this->Product_model->editspecialadd($special);
+
+				$i = $i + 1;
+				// echo $discount;
+			// echo '<pre>';
+			// print_r($_POST);
+			// print_r($special);
+		}
+		// exit();
+
+		}
+
+		$data = [
+
+			'productName' => $this->input->post('product_description[1][name]'),
+			'productDescription' => $this->input->post('product_description[1][product_description]'),
+			'productModel' => $this->input->post('product_description[1][model]'),
+			'SKU' => $this->input->post('sku'),
+			'UPC' => $this->input->post('upc'),
+			'location' => $this->input->post('location'),
+			'price' => $this->input->post('price'),
+			'taxClass' => $this->input->post('tax_class_id'),
+			'quantity' => $this->input->post('quantity'),
+			'minimum' => $this->input->post('minimum'),
+			'subtract' => $this->input->post('subtract'),
+			'stock' => $this->input->post('stock_status_id'),
+			'dateAvailable' => $this->input->post('date_available'),
+			'shipping' => $this->input->post('shipping'),
+			'length' => $this->input->post('length'),
+			'width' => $this->input->post('width'),
+			'height' => $this->input->post('height'),
+			'lengthClass' => $this->input->post('length_class_id'),
+			'weight' => $this->input->post('weight'),
+			'weightClass' => $this->input->post('weight_class_id'),
+			'status' => $this->input->post('status'),
+			'sortOrder' => $this->input->post('sort_order'),
+			'manufacturer' => $this->input->post('manufacturer'),
+			'category' => $this->input->post('category'),
+			// 'image' => $image,
+
+		];
+		$productid = $this->input->post('product_description[1][id]');
+		$edit = $this->Product_model->edit($data, $productid);
+		// $getid = $this->Product_model->getid($data);
+		// $id = $getid['id'];
+
+		$i = 1;
+		// $pid = $this->input->get('id');
+		// $pid = 1;
+
+
+		// $data['discount'] = $this->Product_model->getdiscount($pid);
+		// $data['special'] = $this->Product_model->getspecialrow($pid);
+
+		foreach ($this->input->post('product_discount[][]') as $k) {
+
+			$discount = [
+				// 'id' => $this->input->post('product_discount[discount-row-' .  $i . '][product_discount_id]'),
+				'quantity' => $this->input->post('product_discount[discount-row-' .  $i . '][quantity]'),
+				'priority' => $this->input->post('product_discount[discount-row-' . $i . '][priority]'),
+				'price' => $this->input->post('product_discount[discount-row-' . $i . '][price]'),
+				'date_start' => $this->input->post('product_discount[discount-row-' . $i . '][date_start]'),
+				'date_end' => $this->input->post('product_discount[discount-row-' . $i . '][date_end]'),
+
+			];
+			$id = $this->input->post('product_discount[discount-row-' . $i . '][product_discount_id]');
+			$editdiscount = $this->Product_model->editdiscount($discount, $id);
+
+
+			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
+			// $discount['priority'] = $this->input->post('product_discount[' . $i . '][priority]');
+			// $discount['price'] = $this->input->post('product_discount[' . $i . '][price]');
+			// $discount['date_start'] = $this->input->post('product_discount[' . $i . '][date_start]');
+			// $discount['date_end'] = $this->input->post('product_discount[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($discount);
+		}
+		$i = 1;
+		foreach ($this->input->post('product_special[][]') as $k) {
+
+			$special = [
+				// 'productid' => $id,
+				// 'id' => $this->input->post('product_special[special-row-' . $i . '][product_special_id]'),
+				'priority' => $this->input->post('product_special[special-row-' . $i . '][priority]'),
+				'price' => $this->input->post('product_special[special-row-' . $i . '][price]'),
+				'date_start' => $this->input->post('product_special[special-row-' . $i . '][date_start]'),
+				'date_end' => $this->input->post('product_special[special-row-' . $i . '][date_end]'),
+
+			];
+			$id = $this->input->post('product_special[special-row-' . $i . '][product_special_id]');
+
+			$editspecial = $this->Product_model->editspecial($special, $id);
+
+
+			// $special['priority'] = $this->input->post('product_special[' . $i . '][priority]');
+			// $special['price'] = $this->input->post('product_special[' . $i . '][price]');
+			// $special['date_start'] = $this->input->post('product_special[' . $i . '][date_start]');
+			// $special['date_end'] = $this->input->post('product_special[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($special);
+		}
+		redirect('admin/product');
+
+
+		// $this->upload->initialize($config);
+		// $uploadDir = './assets/img/product/';
+		// if(isset($_FILES['product_image'])) {
+		// 	$fileCount = count($_FILES['product_image']['name']);
+		// 	for($i=0; $i<$fileCount; $i++) {
+		// 		$fileTmpPath = $_FILES['product_image']['tmp_name'][$i]['addfile'];
+		// 		$fileName = $_FILES['product_image'
+		// 		]['name'][$i]['addfile'];
+		// 		$fileDestPath = $uploadDir . $fileName;
+		// 		move_uploaded_file($fileTmpPath, $fileDestPath);
+
+		// 		$aimage = [
+		// 			'productid' => $id,
+		// 			'image' => $fileName,	
+		// 		];
+		// $addimage = $this->Product_model->addimage($aimage);
+
+		// 	}
+		// }
+
+		// echo '<pre>';
+		// print_r($_POST);
+		// print_r($data);
+		// print_r($discount);
+		// print_r($special);
+
+
+
+	}
+	public function deleteproduct()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->deleteproduct($id);
 	}
 	public function product()
 	{
@@ -262,6 +480,7 @@ class Admin extends CI_Controller
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
 		// $data['category'] = $this->Product_model->category();
 		$data['product'] = $this->Product_model->getall($order);
+		$data['special'] = $this->Product_model->getspecial();
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/product');
 		$this->load->view('admin/footer');
