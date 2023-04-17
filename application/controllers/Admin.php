@@ -451,7 +451,7 @@ class Admin extends CI_Controller
 		}
 
 
-		$id = $_POST["id"];
+		$id = $this->input->post('id');
 		$data = $this->Product_model->deleteproduct($id);
 	}
 	public function product()
@@ -668,6 +668,18 @@ class Admin extends CI_Controller
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/category');
 		$this->load->view('admin/footer');
+	}
+
+	public function deletespecial()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		$id = $this->input->post('id');
+
+		$r = $this->Product_model->deletespecial($id);
+
 	}
 
 	public function multi()

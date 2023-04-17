@@ -43,38 +43,37 @@
 
                                 <?php
                                 $d = date("Y-m-d");
+                                $c = 0;
+                                $dd = 0;
                                 foreach ($special as $sp) :
-                                    if ($d >= $sp['date_start'] && $d <= $sp['date_end']) {
+                                    if ($sp['productid'] == $pro['id']) {
+                                        $c++;
+                                        if ($d >= $sp['date_start'] && $d <= $sp['date_end']) {
 
-
-                                        if ($sp['productid'] == $pro['id']) {
-
-
+                                            $dd++;
                                             if ($sp['price'] != null) {
                                 ?>
                                                 <s><?= $pro['price'] ?></s>
                                                 <br>
                                                 <p style="color: red;"><?= $sp['price'] ?></p>
-                                            <?php
-                                            }
-                                        } else {
 
+                                            <?php
+                                                // break;
+                                            }
+                                        }
+                                        if ($dd == 0) {
                                             ?>
                                             <p><?= $pro['price'] ?></p>
                                     <?php
                                         }
                                     }
-
                                 endforeach;
-                                if ($sp['price'] == null) {
-
+                                if ($c == 0) {
                                     ?>
                                     <p><?= $pro['price'] ?></p>
                                 <?php
                                 }
                                 ?>
-
-
                             </td>
                             <td><?= $pro['quantity'] ?></td>
                             <td><a class="edit btn btn-info btn-sm" href="<?= base_url() . 'admin/upprod?id=' . $pro['id'] ?>">
@@ -186,6 +185,7 @@
                     },
                     error: function() {
                         alert('Something is wrong');
+                        // alert(id);
                     },
                     success: function(data) {
                         $("#" + id).remove();

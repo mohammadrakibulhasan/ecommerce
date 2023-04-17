@@ -131,6 +131,7 @@ class Product_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('products');
     }
+
     public function editcategory($id)
     {
         $q = $this->db->get_where('category', array('id' => $id));
@@ -182,5 +183,10 @@ class Product_model extends CI_Model
     {
         $query = $this->db->insert('special', $data);
         return $query;
+    }
+    public function deletespecial($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('special');
     }
 }

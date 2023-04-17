@@ -556,26 +556,26 @@
             e.preventDefault();
             // var id = $(this).find("input[name='id']").val();
             var id = $(this).parents("tr").attr("class");
-            alert(id);
+            // alert(id);
             // var category = $(this).find("input[name='catname']").val();
 
             // console.log(id+category);
-            // $.ajax({
-            //     method: "POST",
-            //     url: "<?= base_url() . 'admin/updatecategory' ?>",
-            //     data: {
-            //         id: id,
-            //         category: category
-            //     },
-            //     success: function(data) {
-            //         // $('#wrap').load('#wrap');
-            //         $('#msg').html(data);
-            //         $("#close").click();
-            //         $("#wrap").load(location.href + " #wrap");
-            //         // alert(id+category)
+            $.ajax({
+                method: "POST",
+                url: "<?= base_url() . 'admin/deletespecial' ?>",
+                data: {
+                    id: id,
+                    // category: category
+                },
+                success: function(data) {
+                    // $('#wrap').load('#wrap');
+                    // $('#msg').html(data);
+                    // $("#close").click();
+                    // $("#wrap").load(location.href + " #wrap");
+                    alert('Row delated')
 
-            //     }
-            // });
+                }
+            });
         });
 
 
