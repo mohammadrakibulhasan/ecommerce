@@ -415,33 +415,6 @@ class Admin extends CI_Controller
 		redirect('admin/product');
 
 
-		// $this->upload->initialize($config);
-		// $uploadDir = './assets/img/product/';
-		// if(isset($_FILES['product_image'])) {
-		// 	$fileCount = count($_FILES['product_image']['name']);
-		// 	for($i=0; $i<$fileCount; $i++) {
-		// 		$fileTmpPath = $_FILES['product_image']['tmp_name'][$i]['addfile'];
-		// 		$fileName = $_FILES['product_image'
-		// 		]['name'][$i]['addfile'];
-		// 		$fileDestPath = $uploadDir . $fileName;
-		// 		move_uploaded_file($fileTmpPath, $fileDestPath);
-
-		// 		$aimage = [
-		// 			'productid' => $id,
-		// 			'image' => $fileName,	
-		// 		];
-		// $addimage = $this->Product_model->addimage($aimage);
-
-		// 	}
-		// }
-
-		// echo '<pre>';
-		// print_r($_POST);
-		// print_r($data);
-		// print_r($discount);
-		// print_r($special);
-
-
 
 	}
 	public function deleteproduct()
@@ -487,22 +460,22 @@ class Admin extends CI_Controller
 		// echo $result;
 	}
 
-	public function category()
-	{
-		if (!$this->session->userdata('id')) {
-			redirect('user/login');
-		}
+	// public function category()
+	// {
+	// 	if (!$this->session->userdata('id')) {
+	// 		redirect('user/login');
+	// 	}
 
-		$data['title'] = 'Home';
-		$data['css'] = base_url() . 'asset/css/home.css';
-		$id = $this->session->userdata('id');
-		$data['admin'] = $this->Admin_model->getuserdetails($id);
-		$data['category'] = $this->Product_model->category();
+	// 	$data['title'] = 'Home';
+	// 	$data['css'] = base_url() . 'asset/css/home.css';
+	// 	$id = $this->session->userdata('id');
+	// 	$data['admin'] = $this->Admin_model->getuserdetails($id);
+	// 	$data['category'] = $this->Product_model->category();
 
-		$this->load->view('admin/header', $data);
-		$this->load->view('admin/category');
-		$this->load->view('admin/footer');
-	}
+	// 	$this->load->view('admin/header', $data);
+	// 	$this->load->view('admin/category');
+	// 	$this->load->view('admin/footer');
+	// }
 	public function addcategory()
 	{
 		if (!$this->session->userdata('id')) {
@@ -566,6 +539,112 @@ class Admin extends CI_Controller
 		if ($r) {
 			echo "data was updated";
 		}
+	}
+
+	public function manufacturers()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		$order = 'ASC';
+		$data['order'] = 'ASC';
+		$count = '';
+		$data['count'] = '';
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
+		}
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
+		}
+		if ($this->input->get('count') == 'desc') {
+			$count = 'DESC';
+			$data['count'] = 'DESC';
+		}
+		if ($this->input->get('count') == 'asc') {
+			$count = 'ASC';
+			$data['count'] = 'ASC';
+		}
+
+
+
+		$data['manufacturer'] = $this->Product_model->manufacturer($order, $count);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/manufacturers');
+		$this->load->view('admin/footer');
+	}
+
+	public function addmanufacturers()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+		$man = array(
+			'manufacturer' => $this->input->post('manname'),
+			'sortorder' => $this->input->post('manorder'),
+		);
+
+		$result = $this->Product_model->addmanufacturers($man);
+
+		if ($result) {
+			redirect('admin/manufacturers');
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/manufacturers');
+		$this->load->view('admin/footer');
+	}
+
+	public function editmanufacturer()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->editmanufacturer($id);
+
+		echo json_encode($data);
+	}
+
+	public function updatemanufacturer()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$id = $_POST["id"];
+		$man = [
+			'manufacturer' => $_POST["man"],
+			'sortorder' => $_POST["order"],
+		];
+		$r = $this->Product_model->updatemanufacturer($id, $man);
+
+		if ($r) {
+			echo "data was updated";
+		}
+	}
+
+	public function deletemanufacturer()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->deletemanufacturer($id);
 	}
 
 	public function orderlist()

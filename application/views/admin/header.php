@@ -183,9 +183,16 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="<?= base_url() . 'admin/categories' ?>">Categories</a></li>
                                 <li><a href="<?= base_url() . 'admin/product' ?>">Products</a></li>
+                                <li><a href="<?= base_url() . 'admin/manufacturers' ?>">Manufacturers</a></li>
                             </ul>
                         </li>
                         <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-sale"></i><span class="hide-menu">Sales</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="<?= base_url() . 'admin/categories' ?>">Orders</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Menu <span class="label label-rounded label-success">3</span></span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="<?= base_url() . 'admin/user' ?>">User</a></li>
@@ -197,7 +204,7 @@
                                 </li>
                                 <li><a href="<?= base_url() . 'admin/orderlist' ?>">Order List</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

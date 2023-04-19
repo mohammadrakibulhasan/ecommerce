@@ -115,7 +115,46 @@ class Product_model extends CI_Model
         $q = $this->db->get('category');
         return $q->result_array();
     }
+    public function manufacturer($order = '', $count = '')
+    {
+        if ($count != null) {
 
+            $this->db->order_by('sortorder', $count);
+        }
+        if ($order != null) {
+
+            $this->db->order_by('manufacturer', $order);
+        }
+        $q = $this->db->get('manufacturers');
+        return $q->result_array();
+    }
+
+    public function addmanufacturers($data)
+    {
+        $query = $this->db->insert('manufacturers', $data);
+        return $query;
+    }
+
+    public function editmanufacturer($id)
+    {
+        $q = $this->db->get_where('manufacturers', array('id' => $id));
+
+        return $q->first_row('array');
+    }
+
+    public function updatemanufacturer($id, $data)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('manufacturers');
+        return $q;
+    }
+    public function deletemanufacturer($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('manufacturers');
+    }
+    
     public function addcategory($data)
     {
         $query = $this->db->insert('category', $data);
@@ -131,6 +170,7 @@ class Product_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('products');
     }
+
 
     public function editcategory($id)
     {

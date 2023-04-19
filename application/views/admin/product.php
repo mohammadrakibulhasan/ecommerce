@@ -37,7 +37,18 @@
                             </td>
 
                             <td><img src="<?= base_url() . '/assets/img/product/' . $pro['image'] ?>" height="30px" width="50px" alt=""></td>
-                            <td><?= $pro['productName'] ?></td>
+                            <td>
+                                <?= $pro['productName'] ?>
+                                <?php 
+                                    if($pro['status'] == 1){
+                                        echo '<p style="color: green;">Enabled</p>';
+                                    }
+                                    else
+                                    {
+                                        echo '<p style="color: red;">Disabled</p>';
+                                    }
+                                  ?>
+                            </td>
                             <td><?= $pro['productModel'] ?></td>
                             <td>
 
