@@ -115,6 +115,87 @@ class Product_model extends CI_Model
         $q = $this->db->get('category');
         return $q->result_array();
     }
+    public function attribute($order = '', $count = '')
+    {
+        if ($count != null) {
+
+            $this->db->order_by('sortorder', $count);
+        }
+        if ($order != null) {
+
+            $this->db->order_by('attributename', $order);
+        }
+        $q = $this->db->get('attribute');
+        return $q->result_array();
+    }
+
+    public function addattribute($data)
+    {
+        $query = $this->db->insert('attribute', $data);
+        return $query;
+    }
+
+    public function editattribute($id)
+    {
+        $q = $this->db->get_where('attribute', array('id' => $id));
+
+        return $q->first_row('array');
+    }
+
+    public function updateattribute($id, $data)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('attribute');
+        return $q;
+    }
+    public function deleteattribute($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('attribute');
+    }
+
+
+
+
+    public function attributegroup($order = '', $count = '')
+    {
+        if ($count != null) {
+
+            $this->db->order_by('sortorder', $count);
+        }
+        if ($order != null) {
+
+            $this->db->order_by('attributename', $order);
+        }
+        $q = $this->db->get('attributegroup');
+        return $q->result_array();
+    }
+    public function addattributegroup($data)
+    {
+        $query = $this->db->insert('attributegroup', $data);
+        return $query;
+    }
+
+    public function editattributegroup($id)
+    {
+        $q = $this->db->get_where('attributegroup', array('id' => $id));
+
+        return $q->first_row('array');
+    }
+
+    public function updateattributegroup($id, $data)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('attributegroup');
+        return $q;
+    }
+    public function deleteattributegroup($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('attributegroup');
+    }
     public function manufacturer($order = '', $count = '')
     {
         if ($count != null) {

@@ -647,6 +647,223 @@ class Admin extends CI_Controller
 		$data = $this->Product_model->deletemanufacturer($id);
 	}
 
+	public function attribute()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$order = 'ASC';
+		$data['order'] = 'ASC';
+		$count = '';
+		$data['count'] = '';
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
+		}
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
+		}
+		if ($this->input->get('count') == 'desc') {
+			$count = 'DESC';
+			$data['count'] = 'DESC';
+		}
+		if ($this->input->get('count') == 'asc') {
+			$count = 'ASC';
+			$data['count'] = 'ASC';
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		$data['attribute'] = $this->Product_model->attribute($order, $count);
+		$data['attributegroup'] = $this->Product_model->attributegroup($order, $count);
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/attribute');
+		$this->load->view('admin/footer');
+		
+	}
+
+
+	public function addattribute()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+		$att = array(
+			'attributename' => $this->input->post('attname'),
+			'attributegroupname' => $this->input->post('attgroupname'),
+			'sortorder' => $this->input->post('attorder'),
+		);
+
+		$result = $this->Product_model->addattribute($att);
+
+		if ($result) {
+			redirect('admin/attribute');
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/attribute');
+		$this->load->view('admin/footer');
+	}
+
+	public function editattribute()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->editattribute($id);
+
+		echo json_encode($data);
+	}
+
+	public function updateattribute()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$id = $_POST["id"];
+		$att = [
+			'attributename' => $_POST["attname"],
+			'attributegroupname' => $_POST["attgroupname"],
+			'sortorder' => $_POST["attorder"],
+		];
+		$r = $this->Product_model->updateattribute($id, $att);
+
+		if ($r) {
+			echo "data has updated";
+		}
+	}
+
+	public function deleteattribute()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->deleteattribute($id);
+	}
+
+
+
+
+	public function attributegroup()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$order = 'ASC';
+		$data['order'] = 'ASC';
+		$count = '';
+		$data['count'] = '';
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
+		}
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
+		}
+		if ($this->input->get('count') == 'desc') {
+			$count = 'DESC';
+			$data['count'] = 'DESC';
+		}
+		if ($this->input->get('count') == 'asc') {
+			$count = 'ASC';
+			$data['count'] = 'ASC';
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		$data['attributegroup'] = $this->Product_model->attributegroup($order, $count);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/attributegroup');
+		$this->load->view('admin/footer');
+
+	}
+
+	public function addattributegroup()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+		$attg = array(
+			'attributename' => $this->input->post('attname'),
+			'sortorder' => $this->input->post('attorder'),
+		);
+
+		$result = $this->Product_model->addattributegroup($attg);
+
+		if ($result) {
+			redirect('admin/attributegroup');
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/attributegroup');
+		$this->load->view('admin/footer');
+	}
+
+	public function editattributegroup()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->editattributegroup($id);
+
+		echo json_encode($data);
+	}
+
+	public function updateattributegroup()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$id = $_POST["id"];
+		$attg = [
+			'attributename' => $_POST["attname"],
+			'sortorder' => $_POST["attorder"],
+		];
+		$r = $this->Product_model->updateattributegroup($id, $attg);
+
+		if ($r) {
+			echo "data has updated";
+		}
+	}
+
+	public function deleteattributegroup()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->deleteattributegroup($id);
+	}
+
+
 	public function orderlist()
 	{
 		if (!$this->session->userdata('id')) {

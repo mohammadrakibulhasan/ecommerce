@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/5f022c8132.js" crossorigin="anonymous"></script>
     <!-- Bootstrap Core CSS -->
-    <link href="<?=$css ?>" rel="stylesheet">
+    <link href="<?= $css ?>" rel="stylesheet">
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="<?= base_url() . 'assets/plugins/bootstrap/css/bootstrap.min.css' ?>" rel="stylesheet">
     <!-- chartist CSS -->
@@ -184,12 +184,26 @@
                                 <li><a href="<?= base_url() . 'admin/categories' ?>">Categories</a></li>
                                 <li><a href="<?= base_url() . 'admin/product' ?>">Products</a></li>
                                 <li><a href="<?= base_url() . 'admin/manufacturers' ?>">Manufacturers</a></li>
+                                <li> <a href="#collapse-1-4" data-bs-toggle="collapse" class="has-arrow">Attributes</a>
+                                    <ul id="collapse-1-4" class="collapse">
+                                        <li> <a href="<?= base_url() . 'admin/attribute' ?>">Attributes</a>
+                                        </li>
+                                        <li> <a href="<?= base_url() . 'admin/attributegroup' ?>">Attribute Groups</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-sale"></i><span class="hide-menu">Sales</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-shopping-cart"></i><span class="hide-menu">Sales</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="<?= base_url() . 'admin/categories' ?>">Orders</a></li>
+                                <li><a href="<?= base_url() . 'admin/#' ?>">Orders</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user"></i><span class="hide-menu">User</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="<?= base_url() . 'admin/#' ?>">Orders</a></li>
                             </ul>
                         </li>
                         <!-- <li>
