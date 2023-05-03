@@ -102,6 +102,44 @@ class Admin extends CI_Controller
 
 	public function addprod()
 	{
+		// echo '<pre>';
+		// print_r($_POST);
+		// echo '--------';
+		// exit();
+		// $i = 0;
+		// $j = 0;
+		// foreach ($this->input->post('product_option[][]') as $k) {
+
+		// 	$option = [
+		// 		'optionid' => $this->input->post('product_option[' . $i . '][product_option_id]'),
+		// 		'required' => $this->input->post('product_option[' . $i . '][required]'),
+		// 		'name' => $this->input->post('product_option[' . $i . '][name]'),
+
+		// 	];
+		// 	echo '<pre>' . $i;
+		// 	print_r($option);
+		// 	foreach ($this->input->post('product_option[]product_option_value[]') as $kv) {
+
+		// 		$optionvalue = [
+		// 			'name' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][name]'),
+		// 			'quantity' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][quantity]'),
+		// 			'subtract' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][subtract]'),
+		// 			'price_prefix' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][price_prefix]'),
+		// 			'price' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][price]'),
+		// 			'points_prefix' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][points_prefix]'),
+		// 			'points' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][points]'),
+		// 			'weight_prefix' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][weight_prefix]'),
+		// 			'weight' => $this->input->post('product_option[' . $i . '][product_option_value][' . $j . '][weight]'),
+		// 			'optionid' => $this->input->post('product_option[' . $i . '][product_option_id]'),
+
+		// 		];
+		// 		echo '<pre>' . $j;
+		// 		print_r($optionvalue);
+		// 		$j = $j + 1;
+		// 	}
+		// 	$i = $i + 1;
+		// }
+		// exit();
 		$config = array(
 			'upload_path' => "./assets/img/product/",
 			'allowed_types' => "jpg|png|jpeg|gif",
@@ -148,6 +186,36 @@ class Admin extends CI_Controller
 		$add = $this->Product_model->add($data);
 		$getid = $this->Product_model->getid($data);
 		$id = $getid['id'];
+
+
+		$i = 0;
+		foreach ($this->input->post('product_option[][]') as $k) {
+
+			$option = [
+				'optionvalue' => $this->input->post('product_option[' . $i . '][option_value]'),
+				'optionname' => $this->input->post('product_option[' . $i . '][option_name]'),
+				'quantity' => $this->input->post('product_option[' . $i . '][quantity]'),
+				'price' => $this->input->post('product_option[' . $i . '][price]'),
+				'points' => $this->input->post('product_option[' . $i . '][points]'),
+				'weight' => $this->input->post('product_option[' . $i . '][weight]'),
+				'productid' => $id,
+
+			];
+			$addoption = $this->Product_model->addoption($option);
+
+
+			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
+			// $discount['priority'] = $this->input->post('product_discount[' . $i . '][priority]');
+			// $discount['price'] = $this->input->post('product_discount[' . $i . '][price]');
+			// $discount['date_start'] = $this->input->post('product_discount[' . $i . '][date_start]');
+			// $discount['date_end'] = $this->input->post('product_discount[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($discount);
+		}
+
 		$i = 0;
 
 		foreach ($this->input->post('product_discount[][]') as $k) {
@@ -253,6 +321,8 @@ class Admin extends CI_Controller
 		$data['product'] = $this->Product_model->getproduct($pid);
 		$data['discount'] = $this->Product_model->getdiscount($pid);
 		$data['special'] = $this->Product_model->getspecialrow($pid);
+		// $data['option'] = $this->Product_model->getoption($pid);
+		$data['optionvalue'] = $this->Product_model->getoptionvalue($pid);
 
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/updateproduct');
@@ -264,6 +334,79 @@ class Admin extends CI_Controller
 			redirect('user/login');
 		}
 
+		$productid = $this->input->post('product_description[1][id]');
+
+
+		// echo '<pre>';
+		// print_r($_POST);
+		// exit();
+		// echo '--------';
+		// $i = 0;
+		// $j = 0;
+		// foreach ($this->input->post('product_option_add[][]') as $k) {
+
+		// 	$option = [
+		// 		'optionid' => $this->input->post('product_option_add[' . $i . '][product_option_add_id]'),
+		// 		'required' => $this->input->post('product_option_add[' . $i . '][required]'),
+		// 		'optionname' => $this->input->post('product_option_add[' . $i . '][name]'),
+		// 		'productid' => $productid,
+
+		// 	];
+		// 	// echo '<pre>' . $i;
+		// 	// print_r($option);
+		// 	$editoptionadd = $this->Product_model->editoptionadd($option);
+		// 	foreach ($this->input->post('product_option_add[]product_option_add_value[]') as $kv) {
+
+		// 		$optionvalue = [
+		// 			'optionvaluename' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][name]'),
+		// 			'quantity' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][quantity]'),
+		// 			'subtract' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][subtract]'),
+		// 			'price_prefix' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][price_prefix]'),
+		// 			'price' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][price]'),
+		// 			'points_prefix' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][points_prefix]'),
+		// 			'points' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][points]'),
+		// 			'weight_prefix' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][weight_prefix]'),
+		// 			'weight' => $this->input->post('product_option_add[' . $i . '][product_option_add_value][' . $j . '][weight]'),
+		// 			'optionid' => $this->input->post('product_option_add[' . $i . '][product_option_add_id]'),
+		// 			'productid' => $productid,
+
+		// 		];
+		// 		// echo '<pre>' . $j;
+		// 		// print_r($optionvalue);
+		// 	$editoptionvalueadd = $this->Product_model->editoptionvalueadd($optionvalue);
+		// 		$j = $j + 1;
+		// 	}
+		// 	$i = $i + 1;
+		// }
+		// exit();
+
+		if ($this->input->post('product_option_add[][]')) {
+
+			$i = 0;
+			foreach ($this->input->post('product_option_add[][]') as $k) {
+
+				$option = [
+					'optionvalue' => $this->input->post('product_option_add[' . $i . '][option_value]'),
+					'optionname' => $this->input->post('product_option_add[' . $i . '][option_name]'),
+					'quantity' => $this->input->post('product_option_add[' . $i . '][quantity]'),
+					'price' => $this->input->post('product_option_add[' . $i . '][price]'),
+					'points' => $this->input->post('product_option_add[' . $i . '][points]'),
+					'weight' => $this->input->post('product_option_add[' . $i . '][weight]'),
+					'productid' => $productid,
+
+				];
+				// $productid = $this->input->post('product_description[1][id]');
+				$editoptionadd = $this->Product_model->editoptionadd($option);
+
+				$i = $i + 1;
+				// echo $discount;
+				// echo '<pre>';
+				// print_r($_POST);
+				// print_r($discount);
+			}
+			// exit();
+
+		}
 		if ($this->input->post('product_discount_add[][]')) {
 
 			$i = 0;
@@ -283,11 +426,11 @@ class Admin extends CI_Controller
 
 				$i = $i + 1;
 				// echo $discount;
-			// echo '<pre>';
-			// print_r($_POST);
-			// print_r($discount);
-		}
-		// exit();
+				// echo '<pre>';
+				// print_r($_POST);
+				// print_r($discount);
+			}
+			// exit();
 
 		}
 
@@ -309,11 +452,11 @@ class Admin extends CI_Controller
 
 				$i = $i + 1;
 				// echo $discount;
-			// echo '<pre>';
-			// print_r($_POST);
-			// print_r($special);
-		}
-		// exit();
+				// echo '<pre>';
+				// print_r($_POST);
+				// print_r($special);
+			}
+			// exit();
 
 		}
 
@@ -346,10 +489,42 @@ class Admin extends CI_Controller
 			// 'image' => $image,
 
 		];
-		$productid = $this->input->post('product_description[1][id]');
 		$edit = $this->Product_model->edit($data, $productid);
 		// $getid = $this->Product_model->getid($data);
 		// $id = $getid['id'];
+
+
+
+		$i = 1;
+		foreach ($this->input->post('product_option[][]') as $k) {
+
+			$option = [
+				'optionvalue' => $this->input->post('product_option[option-row-' . $i . '][option_value]'),
+				'optionname' => $this->input->post('product_option[option-row-' . $i . '][option_name]'),
+				'quantity' => $this->input->post('product_option[option-row-' . $i . '][quantity]'),
+				'price' => $this->input->post('product_option[option-row-' . $i . '][price]'),
+				'points' => $this->input->post('product_option[option-row-' . $i . '][points]'),
+				'weight' => $this->input->post('product_option[option-row-' . $i . '][weight]'),
+				// 'productid' => $id,
+
+			];
+
+			$id = $this->input->post('product_option[option-row-' . $i . '][product_option_id]');
+
+			$editoption = $this->Product_model->editoption($option, $id);
+
+
+			// $discount['quantity'] = $this->input->post('product_discount[' . $i . '][quantity]');
+			// $discount['priority'] = $this->input->post('product_discount[' . $i . '][priority]');
+			// $discount['price'] = $this->input->post('product_discount[' . $i . '][price]');
+			// $discount['date_start'] = $this->input->post('product_discount[' . $i . '][date_start]');
+			// $discount['date_end'] = $this->input->post('product_discount[' . $i . '][date_end]');
+
+			$i = $i + 1;
+			// echo $discount;
+			// echo '<pre>';
+			// print_r($discount);
+		}
 
 		$i = 1;
 		// $pid = $this->input->get('id');
@@ -413,9 +588,6 @@ class Admin extends CI_Controller
 			// print_r($special);
 		}
 		redirect('admin/product');
-
-
-
 	}
 	public function deleteproduct()
 	{
@@ -682,7 +854,6 @@ class Admin extends CI_Controller
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/attribute');
 		$this->load->view('admin/footer');
-		
 	}
 
 
@@ -793,7 +964,6 @@ class Admin extends CI_Controller
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/attributegroup');
 		$this->load->view('admin/footer');
-
 	}
 
 	public function addattributegroup()
@@ -966,6 +1136,26 @@ class Admin extends CI_Controller
 		$this->load->view('admin/footer');
 	}
 
+	public function deleteoption()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		$id = $this->input->post('id');
+
+		$r = $this->Product_model->deleteoption($id);
+	}
+	public function deletediscount()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		$id = $this->input->post('id');
+
+		$r = $this->Product_model->deletediscount($id);
+	}
 	public function deletespecial()
 	{
 		if (!$this->session->userdata('id')) {
@@ -975,7 +1165,6 @@ class Admin extends CI_Controller
 		$id = $this->input->post('id');
 
 		$r = $this->Product_model->deletespecial($id);
-
 	}
 
 	public function multi()

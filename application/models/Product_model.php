@@ -8,6 +8,11 @@ class Product_model extends CI_Model
         $query = $this->db->insert('products', $data);
         return $query;
     }
+    public function addoption($data)
+    {
+        $query = $this->db->insert('options', $data);
+        return $query;
+    }
     public function adddiscount($data)
     {
         $query = $this->db->insert('discount', $data);
@@ -81,6 +86,20 @@ class Product_model extends CI_Model
     {
 
         $query = $this->db->get('special');
+
+        return $query->result_array();
+    }
+    public function getoption()
+    {
+
+        $query = $this->db->get('options');
+
+        return $query->result_array();
+    }
+    public function getoptionvalue()
+    {
+
+        $query = $this->db->get('optionss');
 
         return $query->result_array();
     }
@@ -274,6 +293,13 @@ class Product_model extends CI_Model
         
         return $q->first_row('array');
     }
+    public function editoption($data, $id)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('optionss');
+        return $q;
+    }
     public function editdiscount($data, $id)
     {
         $q = $this->db->set($data)
@@ -295,6 +321,16 @@ class Product_model extends CI_Model
             ->update('products');
         return $q;
     }
+    public function editoptionadd($data)
+    {
+        $query = $this->db->insert('optionss', $data);
+        return $query;
+    }
+    public function editoptionvalueadd($data)
+    {
+        $query = $this->db->insert('optionsvalue', $data);
+        return $query;
+    }
     public function editdiscountadd($data)
     {
         $query = $this->db->insert('discount', $data);
@@ -304,6 +340,16 @@ class Product_model extends CI_Model
     {
         $query = $this->db->insert('special', $data);
         return $query;
+    }
+    public function deleteoption($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('optionss');
+    }
+    public function deletediscount($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('discount');
     }
     public function deletespecial($id)
     {

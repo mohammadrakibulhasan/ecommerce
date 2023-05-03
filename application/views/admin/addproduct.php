@@ -18,7 +18,7 @@
                 <button class="nav-link" id="attribute-tab" data-toggle="tab" data-target="#attribute" type="button" role="tab" aria-controls="attribute" aria-selected="false">Attribute</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="option-tab" data-toggle="tab" data-target="#option" type="button" role="tab" aria-controls="option" aria-selected="false">Option</button>
+                <button class="nav-link" id="option-tab" data-toggle="tab" data-target="#optionview" type="button" role="tab" aria-controls="option" aria-selected="false">Option</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="discount-tab" data-toggle="tab" data-target="#discount" type="button" role="tab" aria-controls="discount" aria-selected="false">Discount</button>
@@ -169,7 +169,7 @@
                         <label for="input-date-available" class="col-sm-2 col-form-label">Date Available</label>
                         <div class="col-sm-10 col-md-4">
                             <div class="input-group">
-                                <input type="date" name="date_available"  placeholder="Date Available" id="input-date-available" class="form-control date">
+                                <input type="date" name="date_available" placeholder="Date Available" id="input-date-available" class="form-control date">
                                 <div class="input-group-text"></div>
                             </div>
                         </div>
@@ -272,13 +272,13 @@
                         <div class="col-sm-10">
                             <input type="text" name="category" value="" placeholder="Categories" id="input-category" list="list-category" class="form-control">
                             <datalist id="list-category">
-                            <?php
-                        foreach ($category as $cat) :
-                        ?>
-                            <option><?= $cat['category'] ?></option>
-                        <?php
-                        endforeach;
-                        ?>
+                                <?php
+                                foreach ($category as $cat) :
+                                ?>
+                                    <option><?= $cat['category'] ?></option>
+                                <?php
+                                endforeach;
+                                ?>
                             </datalist>
                             <div class="input-group">
                                 <div class="form-control p-0" style="height: 150px; overflow: auto;">
@@ -297,7 +297,37 @@
                 Attribute
                 <hr>
             </div>
-            <div class="tab-pane" id="option" role="tabpanel" aria-labelledby="option-tab">Option</div>
+            <div class="tab-pane" id="optionview" role="tabpanel" aria-labelledby="option-tab">
+                Option
+                <hr>
+                <div id="tab-option" class="tab-pane active">
+                    <div class="table-responsive">
+                        <table id="product-option" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <!-- <td class="text-start">Customer Group</td> -->
+                                    <td class="text-end">Option Value</td>
+                                    <td class="text-end">Option Name</td>
+                                    <td class="text-end">Quantity</td>
+                                    <td class="text-end">Price</td>
+                                    <td class="text-end">point</td>
+                                    <td class="text-start">Weight</td>
+                                    <!-- <td class="text-start">Date End</td> -->
+                                    <td class="text-end"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6"></td>
+                                    <td class="text-end"><button type="button" id="button-option" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Option" aria-label="Add Option"><i class="fas fa-plus-circle"></i></button></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="tab-pane" id="discount" role="tabpanel" aria-labelledby="discount-tab">
                 Discount
                 <hr>
@@ -366,7 +396,7 @@
                                 <div id="image" class="card image">
                                     <img src="https://demo.opencart.com/image/cache/no_image-100x100.png" alt="" title="" id="thumb-image" data-oc-placeholder="https://demo.opencart.com/image/cache/no_image-100x100.png" class="card-img-top"> <input type="hidden" name="image" value="" id="input-image">
                                     <div class="card-body">
-                                    <input type="file" id="myfile" name="myfile">
+                                        <input type="file" id="myfile" name="myfile">
                                         <!-- <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> Edit</button> -->
                                         <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> Clear</button>
                                     </div>
@@ -407,8 +437,38 @@
     $(document).ready(function() {
 
 
-        var discount_row = 0;
+        var option_row = 0;
 
+        $('#button-option').on('click', function() {
+            html = '<tr id="option-row-' + option_row + '">';
+            // html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
+            // html += '    <option value="1">Default</option>';
+            html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="'+ option_row +'"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][option_value]" value="" placeholder="Option Value" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][option_name]" value="" placeholder="Option Name" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][quantity]" value="" placeholder="Quantity" class="form-control"/></td>';
+
+            // html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][points]" value="" placeholder="points" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][weight]" value="" placeholder="weight" class="form-control"/></td>';
+
+            html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + option_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+
+            html += '</tr>';
+
+            $('#product-option tbody').append(html);
+
+            option_row++;
+        });
+
+        var discount_row = 0;
         $('#button-discount').on('click', function() {
             html = '<tr id="discount-row-' + discount_row + '">';
             html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
@@ -463,6 +523,228 @@
             $('#product-image tbody').append(html);
 
             image_row++;
+        });
+
+
+        var option_row = 0;
+        $('#input-option').on('change', function() {
+            var type = $(this).val();
+            // alert(type);
+
+            html = '<fieldset id="option-row-' + option_row + '">';
+            html += '  <legend>' + type + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
+
+            html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="' + option_row + '" />';
+
+            // html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
+            // html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
+            // html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
+
+            html += '  <div class="row mb-3">';
+            html += '    <label for="input-required-' + option_row + '" class="col-sm-2 col-form-label">Required</label>';
+            html += '	   <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required-' + option_row + '" class="form-select">';
+            html += '	     <option value="1">Yes</option>';
+            html += '	     <option value="0">No</option>';
+            html += '	 </select></div>';
+            html += '	 <label class="col-sm-2 col-form-label">Option Name</label>';
+            html += '	 <input type="text" class="col-sm-6" name="product_option[' + option_row + '][name]" placeholder="Name" class="form-control"/>';
+            html += '  </div>';
+            if (type == 'select' || type == 'dropdown') {
+                html += '<div class="table-responsive">';
+                html += '  <table id="option-value-' + option_row + '" class="table table-bordered table-hover">';
+                html += '  	 <thead>';
+                html += '      <tr>';
+                html += '        <td class="text-start">Option Value</td>';
+                html += '        <td class="text-end">Quantity</td>';
+                html += '        <td class="text-start">Subtract Stock</td>';
+                html += '        <td class="text-end">Price</td>';
+                html += '        <td class="text-end">Points</td>';
+                html += '        <td class="text-end">Weight</td>';
+                html += '        <td></td>';
+                html += '      </tr>';
+                html += '    </thead>';
+                html += '    <tbody></tbody>';
+                html += '    <tfoot>';
+                html += '      <tr>';
+                html += '        <td colspan="6"></td>';
+                html += '        <td class="text-end"><button type="button" data-option-row="' + option_row + '" data-bs-toggle="tooltip" id="opadd" title="Add Option Value" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
+                html += '      </tr>';
+                html += '    </tfoot>';
+                html += '  </table>';
+                html += '</div>';
+
+                // html += '  <select id="product-option-values-' + option_row + '" class="d-none">';
+
+                // for (i = 0; i < item['option_value'].length; i++) {
+                //     html += '<option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
+                // }
+
+                // html += '  </select>';
+                html += '</fieldset>';
+            }
+
+            $('#option').append(html);
+
+            option_row++;
+        });
+
+        var option_value_row = 0;
+        $('#option').on('click', '.btn-primary', function() {
+            var element = this;
+            // alert('ok');
+
+            if ($(element).attr('data-option-value-row')) {
+                element.option_value_row = $(element).attr('data-option-value-row');
+            } else {
+                element.option_value_row = option_value_row;
+            }
+
+
+            $('.modal').remove();
+
+            html = '<div id="modal-option" class="modal fade">';
+            html += '  <div class="modal-dialog">';
+            html += '    <div class="modal-content">';
+            html += '      <div class="modal-header">';
+            html += '        <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> Option Value</h5> <button type="button" class="btn-close" data-dismiss="modal"></button>';
+            html += '      </div>';
+            html += '      <div class="modal-body">';
+            html += '        <div class="mb-3">';
+            html += '      	   <label for="input-modal-name" class="form-label">Option Name</label>';
+            html += '      	   <input type="text" name="name" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][name]\']').val() : '') + '" placeholder="Name" id="input-modal-name" class="form-control"/>';
+            html += '        </div>';
+
+            html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
+            // html += '        </div>';
+
+            html += '        <div class="mb-3">';
+            html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
+
+
+            html += '      	   <label for="input-modal-quantity" class="form-label">Quantity</label>';
+            html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="Quantity" id="input-modal-quantity" class="form-control"/>';
+            html += '        </div>';
+
+            html += '        <div class="mb-3">';
+            html += '      	   <label for="input-modal-subtract" class="form-label">Subtract Stock</label>';
+            html += '      	   <select name="subtract" id="input-modal-subtract" class="form-select">';
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
+                html += '        <option value="1" selected="selected">Yes</option>';
+                html += '      	 <option value="0">No</option>';
+            } else {
+                html += '      	 <option value="1">Yes</option>';
+                html += '      	 <option value="0" selected="selected">No</option>';
+            }
+
+            html += '      	   </select>';
+            html += '        </div>';
+
+            html += '        <div class="mb-3">';
+            html += '      	   <label for="input-modal-price" class="form-label">Price</label>';
+            html += '          <div class="input-group">';
+            html += '            <select name="price_prefix" class="form-select">';
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
+                html += '      	   <option value="+" selected="selected">+</option>';
+            } else {
+                html += '      	   <option value="+">+</option>';
+            }
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
+                html += '      	       <option value="-" selected="selected">-</option>';
+            } else {
+                html += '      	       <option value="-">-</option>';
+            }
+
+            html += '      	     </select>';
+            html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="Price" id="input-modal-price" class="form-control"/>';
+            html += '          </div>';
+            html += '        </div>';
+
+            html += '        <div class="mb-3">';
+            html += '      	   <label for="input-modal-points" class="form-label">Points</label>';
+            html += '          <div class="input-group">';
+            html += '      	     <select name="points_prefix" class="form-select">';
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
+                html += '      	       <option value="+" selected>+</option>';
+            } else {
+                html += '      	       <option value="+">+</option>';
+            }
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
+                html += '      	       <option value="-" selected>-</option>';
+            } else {
+                html += '      	       <option value="-">-</option>';
+            }
+
+            html += '      	     </select>';
+            html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="Points" id="input-modal-points" class="form-control"/>';
+            html += '          </div>';
+            html += '        </div>';
+
+            html += '        <div class="mb-3">';
+            html += '      	   <label for="input-modal-weight" class="form-label">Weight</label>';
+            html += '          <div class="input-group">';
+            html += '      	     <select name="weight_prefix" class="form-select">';
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
+                html += '      	       <option value="+" selected>+</option>';
+            } else {
+                html += '      	       <option value="+">+</option>';
+            }
+
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
+                html += '      	       <option value="-" selected>-</option>';
+            } else {
+                html += '      	       <option value="-">-</option>';
+            }
+
+            html += '      	     </select>';
+            html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="Weight" id="input-modal-weight" class="form-control"/>';
+            html += '          </div>';
+            html += '        </div>';
+
+            html += '      </div>';
+
+            html += '      <div class="modal-footer">';
+            html += '	     <button type="button" id="button-save" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '" class="btn btn-primary">Save</button> <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '  </div>';
+            html += '</div>';
+
+            $('body').append(html);
+            $('#modal-option').modal('show');
+
+            $('#modal-option #button-save').on('click', function() {
+                html = '<tr id="option-value-row-' + element.option_value_row + '">';
+
+                // html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
+
+                html += '  <td class="text-end">' + $('#modal-option input[name=\'name\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][name]" value="' + $('#modal-option input[name=\'name\']').val() + '"/></td>';
+
+                html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
+                html += '  <td class="text-start">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? 'Yes' : 'No') + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]" value="' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]" value="' + $('#modal-option input[name=\'price\']').val() + '"/></td>';
+                html += '  <td class="text-end"> ' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]" value="' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]" value="' + $('#modal-option input[name=\'points\']').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]" value="' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]" value="' + $('#modal-option input[name=\'weight\']').val() + '"/></td>';
+                html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="Edit" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '"class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button> <button type="button" onclick="$(\'#option-value-row-' + element.option_value_row + '\').remove();" data-bs-toggle="tooltip" rel="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+                html += '</tr>';
+
+                if ($(element).attr('data-option-value-row')) {
+                    $('#option-value-row-' + element.option_value_row).replaceWith(html);
+                } else {
+                    $('#option-value-' + $(element).attr('data-option-row')).append(html);
+
+                    option_value_row++;
+                }
+
+                $('#modal-option').modal('hide');
+            });
+
+
         });
 
         // $(document).on('submit', '#updateForm', function(e) {

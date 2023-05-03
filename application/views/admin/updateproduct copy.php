@@ -304,63 +304,112 @@
                 Option
                 <hr>
                 <div id="tab-option" class="tab-pane active">
-                    <div class="table-responsive">
-                        <table id="product-option" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <!-- <td class="text-start">Customer Group</td> -->
-                                    <td class="text-end">Option Value</td>
-                                    <td class="text-end">Option Name</td>
-                                    <td class="text-end">Quantity</td>
-                                    <td class="text-end">Price</td>
-                                    <td class="text-end">point</td>
-                                    <td class="text-start">Weight</td>
-                                    <!-- <td class="text-start">Date End</td> -->
-                                    <td class="text-end"></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($optionvalue as $opvalue) :
-                                ?>
-                                    <tr id="option-row-<?= $opvalue['id'] ?>" class="<?= $opvalue['id'] ?>">
+                    <div id="option">
+                        <?php
+                        foreach ($option as $op) :
+                        ?>
+                            <fieldset id="option-row-<?= $op['optionid'] ?>">
+                                <legend>Select <button type="button" class="btn btn-danger btn-sm float-end" onclick="$('#option-row-<?= $op['optionid'] ?>').remove();"><i class="fas fa-minus-circle"></i></button></legend>
 
-                                        <!-- <td class="text-start"><select name="product_option[option-row-<?= $opvalue['id'] ?>][customer_group_id]" class="form-select">
+                                <input type="hidden" name="product_option[<?= $op['optionid'] ?>][productid]" value="<?= $op['productid'] ?>">
 
-                                                <option value="1">Default</option>
+                                <input type="hidden" name="product_option[<?= $op['optionid'] ?>][name]" value="<?= $op['optionname'] ?>">
 
-                                            </select> -->
+                                <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_id]" value="<?= $op['optionid'] ?>">
 
-                                        <input type="hidden" name="product_option[option-row-<?= $opvalue['id'] ?>][product_option_id]" value="<?= $opvalue['id'] ?>" /> 
+                                <!-- <input type="hidden" name="product_option[3][type]" value="select"> -->
 
-                                        <input type="hidden" name="product_option[option-row-<?= $opvalue['id'] ?>][product_id]" value="<?= $opvalue['productid'] ?>" /></td>
+                                <div class="row mb-3">
+                                    <label for="input-required-<?= $op['optionid'] ?>" class="col-sm-2 col-form-label">Required</label>
+                                    <div class="col-sm-10">
+                                        <select name="product_option[<?= $op['optionid'] ?>][required]" id="input-required-<?= $op['optionid'] ?>" class="form-select">
+                                            <option value="1" selected="selected">Enabled</option>
+                                            <option value="0">Disabled</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label">Option Name</label>
+                                    <input type="text" class="col-sm-6" name="product_option[<?= $op['optionid'] ?>][name]" placeholder="Name" value="<?= $op['optionname'] ?>">
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-start">Option Value</td>
+                                                <td class="text-end">Quantity</td>
+                                                <td class="text-start">Subtract Stock</td>
+                                                <td class="text-end">Price</td>
+                                                <td class="text-end">Points</td>
+                                                <td class="text-end">Weight</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="option-value_add-<?= $op['optionid'] ?>">
+                                            <?php
+                                            foreach ($optionvalue as $opvalue) :
+                                                if ($op['optionid'] == $opvalue['optionid']) {
 
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][option_value]" value="<?= $opvalue['optionvalue'] ?>" placeholder="option value" class="form-control" /></td>
+                                            ?>
+                                                    <tr id="option-value-row-<?= $opvalue['id'] ?>">
+                                                        <td class="text-start"><?= $opvalue['optionvaluename'] ?>
 
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][option_name]" value="<?= $opvalue['optionname'] ?>" placeholder="option value" class="form-control" /></td>
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][option_value_id]" value="<?= $op['optionid'] ?>">
 
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][quantity]" value="<?= $opvalue['quantity'] ?>" placeholder="Quantity" class="form-control" /></td>
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][product_option_value_id]" value="<?= $opvalue['id'] ?>">
 
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][price]" value="<?= $opvalue['price'] ?>" placeholder="Price" class="form-control" /></td>
-
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][points]" value="<?= $opvalue['points'] ?>" placeholder="points" class="form-control" /></td>
-
-                                        <td class="text-end"><input type="text" name="product_option[option-row-<?= $opvalue['id'] ?>][weight]" value="<?= $opvalue['weight'] ?>" placeholder="Weight" class="form-control" /></td>
-
-
-                                        <td id="delete_option" class="text-end"><button type="button" onclick="$('#option-row-<?= $opvalue['id'] ?>' ).remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
-                                    </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6"></td>
-                                    <td class="text-end"><button type="button" id="button-option" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Option" aria-label="Add Option"><i class="fas fa-plus-circle"></i></button></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                                        </td>
+                                                        <td class="text-end"><?= $opvalue['quantity'] ?> <input type="hidden" name="product_option_add[<?= $op['optionid'] ?>][product_option_add_value][<?= $opvalue['id'] ?>][quantity]" value="<?= $opvalue['quantity'] ?>"></td>
+                                                        <td class="text-start"> Yes
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][subtract]" value="1">
+                                                        </td>
+                                                        <td class="text-end"><?= $opvalue['price_prefix'] ?><?= $opvalue['price'] ?>
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][price_prefix]" value="+"> <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][price]" value="4">
+                                                        </td>
+                                                        <td class="text-end"><?= $opvalue['points_prefix'] ?><?= $opvalue['points'] ?>
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][points_prefix]" value="+"> <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][points]" value="0">
+                                                        </td>
+                                                        <td class="text-end"><?= $opvalue['weight_prefix'] ?><?= $opvalue['weight'] ?>
+                                                            <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][weight_prefix]" value="+"> <input type="hidden" name="product_option[<?= $op['optionid'] ?>][product_option_value][<?= $opvalue['id'] ?>][weight]" value="4">
+                                                        </td>
+                                                        <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="" data-option-row="3" data-option-value-row="7" class="btn btn-primary" data-bs-original-title="Edit" aria-label="Edit"><i class="fas fa-pencil-alt"></i></button> <button type="button" onclick="$('#option-value-row-7').remove();" data-bs-toggle="tooltip" title="" class="btn btn-danger" data-bs-original-title="Remove" aria-label="Remove"><i class="fa fa-minus-circle"></i></button></td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            endforeach;
+                                            ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6"></td>
+                                                <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="" data-option-row="3" class="btn btn-primary" data-bs-original-title="Add Option Value" aria-label="Add Option Value"><i class="fa fa-plus-circle"></i></button></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <!-- <select id="product-option-values-3" class="d-none">
+                                <option value="39">Red</option>
+                                <option value="40">Blue</option>
+                                <option value="41">Green</option>
+                                <option value="42">Yellow</option>
+                            </select> -->
+                                </div>
+                            </fieldset>
+                        <?php
+                        endforeach;
+                        ?>
                     </div>
+                    <fieldset>
+                        <legend>Add Option</legend>
+                        <div class="row mb-3">
+                            <label for="input-option" class="col-sm-2 col-form-label">Option</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="option" placeholder="Option" id="input-option" list="list-option" class="form-control">
+                                <datalist id="list-option">
+                                    <option value="select">Select</option>
+                                    <option value="dropdown">Dropdown</option>
+                                </datalist>
+                                <!-- <div class="form-text">(Autocomplete)</div> -->
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
             <div class="tab-pane" id="discount" role="tabpanel" aria-labelledby="discount-tab">
@@ -531,38 +580,6 @@
     $(document).ready(function() {
 
 
-        var option_row = 0;
-
-        $('#button-option').on('click', function() {
-            html = '<tr id="option-row-' + option_row + '">';
-            // html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
-            // html += '    <option value="1">Default</option>';
-            html += '  </select><input type="hidden" name="product_option_add[' + option_row + '][product_option_add_id]" value="' + option_row + '"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][option_value]" value="" placeholder="Option Value" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][option_name]" value="" placeholder="Option Name" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][quantity]" value="" placeholder="Quantity" class="form-control"/></td>';
-
-            // html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][priority]" value="" placeholder="Priority" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][price]" value="" placeholder="Price" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][points]" value="" placeholder="points" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><input type="text" name="product_option_add[' + option_row + '][weight]" value="" placeholder="weight" class="form-control"/></td>';
-
-            html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + option_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
-
-            html += '</tr>';
-
-            $('#product-option tbody').append(html);
-
-            option_row++;
-        });
-
-
         var discount_row = 0;
 
         $('#button-discount').on('click', function() {
@@ -629,20 +646,20 @@
             html = '<fieldset id="option-row-' + option_row + '">';
             html += '  <legend>' + type + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
 
-            html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="' + option_row + '" />';
+            html += '  <input type="hidden" name="product_option_add[' + option_row + '][product_option_add_id]" value="' + option_row + '" />';
 
-            // html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
-            // html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
-            // html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
+            // html += '  <input type="hidden" name="product_option_add[' + option_row + '][name]" value="' + item['label'] + '" />';
+            // html += '  <input type="hidden" name="product_option_add[' + option_row + '][option_id]" value="' + item['value'] + '" />';
+            // html += '  <input type="hidden" name="product_option_add[' + option_row + '][type]" value="' + item['type'] + '" />';
 
             html += '  <div class="row mb-3">';
             html += '    <label for="input-required-' + option_row + '" class="col-sm-2 col-form-label">Required</label>';
-            html += '	   <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required-' + option_row + '" class="form-select">';
+            html += '	   <div class="col-sm-10"><select name="product_option_add[' + option_row + '][required]" id="input-required-' + option_row + '" class="form-select">';
             html += '	     <option value="1">Yes</option>';
             html += '	     <option value="0">No</option>';
             html += '	 </select></div>';
             html += '	 <label class="col-sm-2 col-form-label">Option Name</label>';
-            html += '	 <input type="text" class="col-sm-6" name="product_option[' + option_row + '][name]" placeholder="Name" class="form-control"/>';
+            html += '	 <input type="text" class="col-sm-6" name="product_option_add[' + option_row + '][name]" placeholder="Name" class="form-control"/>';
             html += '  </div>';
             if (type == 'select' || type == 'dropdown') {
                 html += '<div class="table-responsive">';
@@ -683,7 +700,7 @@
             option_row++;
         });
 
-        var option_value_row = 0;
+        var option_value_row = 1;
         $('#option').on('click', '.btn-primary', function() {
             var element = this;
             // alert('ok');
@@ -706,25 +723,25 @@
             html += '      <div class="modal-body">';
             html += '        <div class="mb-3">';
             html += '      	   <label for="input-modal-name" class="form-label">Option Name</label>';
-            html += '      	   <input type="text" name="name" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][name]\']').val() : '') + '" placeholder="Name" id="input-modal-name" class="form-control"/>';
+            html += '      	   <input type="text" name="name" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][name]\']').val() : '') + '" placeholder="Name" id="input-modal-name" class="form-control"/>';
             html += '        </div>';
 
-            html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
+            html += '          <input type="hidden" name="product_option_add_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][product_option_add_value_id]\']').val() : '') + '"/>';
             // html += '        </div>';
 
             html += '        <div class="mb-3">';
-            html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
+            html += '          <input type="hidden" name="product_option_add_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][product_option_add_value_id]\']').val() : '') + '"/>';
 
 
             html += '      	   <label for="input-modal-quantity" class="form-label">Quantity</label>';
-            html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="Quantity" id="input-modal-quantity" class="form-control"/>';
+            html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="Quantity" id="input-modal-quantity" class="form-control"/>';
             html += '        </div>';
 
             html += '        <div class="mb-3">';
             html += '      	   <label for="input-modal-subtract" class="form-label">Subtract Stock</label>';
             html += '      	   <select name="subtract" id="input-modal-subtract" class="form-select">';
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
                 html += '        <option value="1" selected="selected">Yes</option>';
                 html += '      	 <option value="0">No</option>';
             } else {
@@ -740,20 +757,20 @@
             html += '          <div class="input-group">';
             html += '            <select name="price_prefix" class="form-select">';
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
                 html += '      	   <option value="+" selected="selected">+</option>';
             } else {
                 html += '      	   <option value="+">+</option>';
             }
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
                 html += '      	       <option value="-" selected="selected">-</option>';
             } else {
                 html += '      	       <option value="-">-</option>';
             }
 
             html += '      	     </select>';
-            html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="Price" id="input-modal-price" class="form-control"/>';
+            html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="Price" id="input-modal-price" class="form-control"/>';
             html += '          </div>';
             html += '        </div>';
 
@@ -762,20 +779,20 @@
             html += '          <div class="input-group">';
             html += '      	     <select name="points_prefix" class="form-select">';
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
                 html += '      	       <option value="+" selected>+</option>';
             } else {
                 html += '      	       <option value="+">+</option>';
             }
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
                 html += '      	       <option value="-" selected>-</option>';
             } else {
                 html += '      	       <option value="-">-</option>';
             }
 
             html += '      	     </select>';
-            html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="Points" id="input-modal-points" class="form-control"/>';
+            html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="Points" id="input-modal-points" class="form-control"/>';
             html += '          </div>';
             html += '        </div>';
 
@@ -784,20 +801,20 @@
             html += '          <div class="input-group">';
             html += '      	     <select name="weight_prefix" class="form-select">';
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
                 html += '      	       <option value="+" selected>+</option>';
             } else {
                 html += '      	       <option value="+">+</option>';
             }
 
-            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
+            if ($(element).attr('data-option-value-row') && $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
                 html += '      	       <option value="-" selected>-</option>';
             } else {
                 html += '      	       <option value="-">-</option>';
             }
 
             html += '      	     </select>';
-            html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="Weight" id="input-modal-weight" class="form-control"/>';
+            html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="Weight" id="input-modal-weight" class="form-control"/>';
             html += '          </div>';
             html += '        </div>';
 
@@ -816,15 +833,15 @@
             $('#modal-option #button-save').on('click', function() {
                 html = '<tr id="option-value-row-' + element.option_value_row + '">';
 
-                // html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
+                // html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][product_option_add_value_id]" value="' + $('#modal-option input[name=\'product_option_add_value_id\']').val() + '"/></td>';
 
-                html += '  <td class="text-end">' + $('#modal-option input[name=\'name\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][name]" value="' + $('#modal-option input[name=\'name\']').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option input[name=\'name\']').val() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][name]" value="' + $('#modal-option input[name=\'name\']').val() + '"/></td>';
 
-                html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
-                html += '  <td class="text-start">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? 'Yes' : 'No') + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
-                html += '  <td class="text-end">' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]" value="' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]" value="' + $('#modal-option input[name=\'price\']').val() + '"/></td>';
-                html += '  <td class="text-end"> ' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]" value="' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]" value="' + $('#modal-option input[name=\'points\']').val() + '"/></td>';
-                html += '  <td class="text-end">' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]" value="' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]" value="' + $('#modal-option input[name=\'weight\']').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
+                html += '  <td class="text-start">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? 'Yes' : 'No') + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][price_prefix]" value="' + $('#modal-option select[name=\'price_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][price]" value="' + $('#modal-option input[name=\'price\']').val() + '"/></td>';
+                html += '  <td class="text-end"> ' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][points_prefix]" value="' + $('#modal-option select[name=\'points_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][points]" value="' + $('#modal-option input[name=\'points\']').val() + '"/></td>';
+                html += '  <td class="text-end">' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val() + '<input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][weight_prefix]" value="' + $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + '"/><input type="hidden" name="product_option_add[' + $(element).attr('data-option-row') + '][product_option_add_value][' + element.option_value_row + '][weight]" value="' + $('#modal-option input[name=\'weight\']').val() + '"/></td>';
                 html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="Edit" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '"class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button> <button type="button" onclick="$(\'#option-value-row-' + element.option_value_row + '\').remove();" data-bs-toggle="tooltip" rel="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
                 html += '</tr>';
 
@@ -842,38 +859,11 @@
 
         });
 
-        $(document).on('click', '#delete_option', function(e) {
-            e.preventDefault();
-            // var id = $(this).find("input[name='id']").val();
-            var id = $(this).parents("tr").attr("class");
-            // alert(id);
-            // var category = $(this).find("input[name='catname']").val();
-
-            // console.log(id+category);
-            $.ajax({
-                method: "POST",
-                url: "<?= base_url() . 'admin/deleteoption' ?>",
-                data: {
-                    id: id,
-                    //         category: category
-                },
-                success: function(data) {
-                    //         // $('#wrap').load('#wrap');
-                    //         $('#msg').html(data);
-                    //         $("#close").click();
-                    //         $("#wrap").load(location.href + " #wrap");
-                    //         // alert(id+category)
-                    alert('Row delated')
-
-
-                }
-            });
-        });
         $(document).on('click', '#delete_discount', function(e) {
             e.preventDefault();
             // var id = $(this).find("input[name='id']").val();
             var id = $(this).parents("tr").attr("class");
-            // alert(id);
+            alert(id);
             // var category = $(this).find("input[name='catname']").val();
 
             // console.log(id+category);
