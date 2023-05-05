@@ -164,19 +164,53 @@
     <h2 class="m-header">Featured Products</h2>
     <p class="m-blurb">Check &amp; Get Your Desired Product!</p>
     <div class="p-items-wrap">
-        <div class="p-item">
-            <div class="p-item-inner">
-                <div class="marks">
-                    <span class="mark">Save: 380৳</span>
-                </div>
-                <div class="p-item-img"> <a href="https://www.startech.com.bd/msi-optix-g241v-e2-24-inch-fhd-gaming-monitor"><img src="https://www.startech.com.bd/image/cache/catalog/monitor/msi/optix-g241v-e2/optix-g241v-e2-200x200.jpg" alt="MSI Optix G241V E2 24&quot; FHD FreeSync IPS Esports Gaming Monitor" width="228" height="228"></a></div>
-                <div class="p-item-details">
-                    <h4 class="p-item-name"> <a href="https://www.startech.com.bd/msi-optix-g241v-e2-24-inch-fhd-gaming-monitor">MSI Optix G241V E2 24" FHD FreeSync IPS Esports Gaming Monitor</a></h4>
-                    <div class="p-item-price">
-                        <span class="price-new">18,620৳</span> <span class="price-old">19,000৳</span>
+            <?php foreach ($product as $pro) : ?>
+            <div class="p-item">
+                <div class="p-item-inner">
+                    <div class="marks">
+                        <span class="mark">Save: 380৳</span>
+                    </div>
+                    <div class="p-item-img"> <a href="<?= base_url().'user/productviews?id='.$pro['id']?>"><img src="<?= base_url() . 'assets/img/product/' . $pro['image'] ?>" alt="" width="228" height="228"></a></div>
+                    <div class="p-item-details">
+                        <h4 class="p-item-name"> <a href="<?= base_url().'user/productviews?id='.$pro['id']?>"><?= $pro['productName'] ?></a></h4>
+                        <div class="p-item-price">
+                            <?php
+                            $d = date("Y-m-d");
+                            $c = 0;
+                            $dd = 0;
+                            foreach ($special as $sp) :
+                                if ($sp['productid'] == $pro['id']) {
+                                    $c++;
+                                    if ($d >= $sp['date_start'] && $d <= $sp['date_end']) {
+
+                                        $dd++;
+                                        if ($sp['price'] != null) {
+                            ?>
+                                            <p style="color: red;"><?= $sp['price'] ?></p>
+                                            <s><p style="color: black;"><?= $pro['price'] ?></p></s>
+
+                                        <?php
+                                            // break;
+                                        }
+                                    }
+                                    if ($dd == 0) {
+                                        ?>
+                                        <p><?= $pro['price'] ?></p>
+                                <?php
+                                    }
+                                }
+                            endforeach;
+                            if ($c == 0) {
+                                ?>
+                                <p><?= $pro['price'] ?></p>
+                            <?php
+                            }
+                            ?>
+                            <!-- <span class="price-new">18,620৳</span> <span class="price-old">19,000৳</span> -->
+                        </div>
                     </div>
                 </div>
             </div>
+            <?php endforeach ?>
         </div>
-    </div>
 </div>

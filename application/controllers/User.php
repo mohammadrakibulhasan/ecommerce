@@ -111,9 +111,28 @@ class User extends CI_Controller
 		$id = $this->session->userdata('userid');
 		$data['user'] = $this->User_model->getuserdetails($id);
 		$data['product'] = $this->Product_model->getall();
+		$data['special'] = $this->Product_model->getspecial();
 		// $this->load->view('user/header', $data);
 		$this->load->view('user/head', $data);
 		$this->load->view('user/home');
+		$this->load->view('user/foot');
+	}
+	public function productviews()
+	{
+		if (!$this->session->userdata('userid')) {
+			redirect('user/login');
+		}
+		// redirect('user/home');
+		$id = $this->session->userdata('userid');
+		$pid = $this->input->get('id');
+		$data['user'] = $this->User_model->getuserdetails($id);
+		$data['product'] = $this->Product_model->getproduct($pid);
+		$data['special'] = $this->Product_model->getspecialid($pid);
+		$data['option'] = $this->Product_model->getoptionvalue($pid);
+		$data['attribute'] = $this->Product_model->productattribute($pid);
+		// $this->load->view('user/header', $data);
+		$this->load->view('user/head', $data);
+		$this->load->view('user/productview');
 		$this->load->view('user/foot');
 	}
 	public function logout()

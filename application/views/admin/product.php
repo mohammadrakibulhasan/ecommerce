@@ -64,9 +64,9 @@
                                             $dd++;
                                             if ($sp['price'] != null) {
                                 ?>
-                                                <s><?= $pro['price'] ?></s>
-                                                <br>
                                                 <p style="color: red;"><?= $sp['price'] ?></p>
+                                                
+                                                <s><?= $pro['price'] ?></s>
 
                                             <?php
                                                 // break;

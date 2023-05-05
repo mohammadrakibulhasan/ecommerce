@@ -184,6 +184,7 @@
                                 <li><a href="<?= base_url() . 'admin/categories' ?>">Categories</a></li>
                                 <li><a href="<?= base_url() . 'admin/product' ?>">Products</a></li>
                                 <li><a href="<?= base_url() . 'admin/manufacturers' ?>">Manufacturers</a></li>
+                                <li><a href="<?= base_url() . 'admin/filter' ?>">Filter</a></li>
                                 <li> <a href="#collapse-1-4" data-bs-toggle="collapse" class="has-arrow">Attributes</a>
                                     <ul id="collapse-1-4" class="collapse">
                                         <li> <a href="<?= base_url() . 'admin/attribute' ?>">Attributes</a>

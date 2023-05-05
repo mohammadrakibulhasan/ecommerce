@@ -94,6 +94,8 @@ class Admin extends CI_Controller
 
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
 		$data['category'] = $this->Product_model->getcategory();
+		$data['attribute'] = $this->Product_model->getattribute();
+		$data['manufacturer'] = $this->Product_model->getmanufacturer();
 		// $data['category'] = $this->Product_model->category();
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/addproduct');
@@ -105,6 +107,17 @@ class Admin extends CI_Controller
 		// echo '<pre>';
 		// print_r($_POST);
 		// echo '--------';
+		$i = 0;
+		foreach ($this->input->post('product_attribute[][]') as $k) {
+
+			$attribute = [
+				'attributename' => $this->input->post('product_attribute[' . $i . '][name]'),
+				'attributevalue' => $this->input->post('product_attribute[' . $i . '][product_attribute_description]'),
+
+			];
+			$i = $i + 1;
+			// print_r($attribute);
+		}
 		// exit();
 		// $i = 0;
 		// $j = 0;
@@ -186,6 +199,22 @@ class Admin extends CI_Controller
 		$add = $this->Product_model->add($data);
 		$getid = $this->Product_model->getid($data);
 		$id = $getid['id'];
+
+		$i = 0;
+		foreach ($this->input->post('product_attribute[][]') as $k) {
+
+			$attribute = [
+				'attributename' => $this->input->post('product_attribute[' . $i . '][name]'),
+				'attributevalue' => $this->input->post('product_attribute[' . $i . '][product_attribute_description]'),
+				'productid' => $id,
+
+			];
+
+			$addproductattribute = $this->Product_model->addproductattribute($attribute);
+
+			$i = $i + 1;
+			// print_r($attribute);
+		}
 
 
 		$i = 0;
@@ -315,6 +344,8 @@ class Admin extends CI_Controller
 		$data['css'] = base_url() . 'asset/css/home.css';
 		$id = $this->session->userdata('id');
 		$pid = $this->input->get('id');
+		// echo $pid;
+		// exit();
 		$data['admin'] = $this->Admin_model->getuserdetails($id);
 		// $data['manufacturer'] = $this->Product_model->getmanufacturer();
 		$data['category'] = $this->Product_model->getcategory();
@@ -323,6 +354,12 @@ class Admin extends CI_Controller
 		$data['special'] = $this->Product_model->getspecialrow($pid);
 		// $data['option'] = $this->Product_model->getoption($pid);
 		$data['optionvalue'] = $this->Product_model->getoptionvalue($pid);
+		$data['attribute'] = $this->Product_model->getattribute();
+		$data['productattribute'] = $this->Product_model->productattribute($pid);
+
+
+		// print_r($data['optionvalue']);
+		// exit();
 
 		$this->load->view('admin/header', $data);
 		$this->load->view('admin/updateproduct');
@@ -379,6 +416,23 @@ class Admin extends CI_Controller
 		// 	$i = $i + 1;
 		// }
 		// exit();
+		if ($this->input->post('product_attribute_add[][]')) {
+			$i = 0;
+			foreach ($this->input->post('product_attribute_add[][]') as $k) {
+
+				$attribute = [
+					'attributename' => $this->input->post('product_attribute_add[' . $i . '][name]'),
+					'attributevalue' => $this->input->post('product_attribute_add[' . $i . '][product_attribute_description]'),
+					'productid' => $productid,
+
+				];
+
+				$editproductattributeadd = $this->Product_model->editproductattributeadd($attribute);
+
+				$i = $i + 1;
+				// print_r($attribute);
+			}
+		}
 
 		if ($this->input->post('product_option_add[][]')) {
 
@@ -493,6 +547,23 @@ class Admin extends CI_Controller
 		// $getid = $this->Product_model->getid($data);
 		// $id = $getid['id'];
 
+		$i = 1;
+		foreach ($this->input->post('product_attribute[][]') as $k) {
+
+			$attribute = [
+				'attributename' => $this->input->post('product_attribute[' . $i . '][name]'),
+				'attributevalue' => $this->input->post('product_attribute[' . $i . '][product_attribute_description]'),
+				// 'productid' => $productid,
+
+			];
+			$id = $this->input->post('product_attribute[' . $i . '][attribute_id]');
+
+			$editproductattribute = $this->Product_model->editproductattribute($attribute, $id);
+
+			$i = $i + 1;
+			// print_r($attribute);
+		}
+
 
 
 		$i = 1;
@@ -560,7 +631,7 @@ class Admin extends CI_Controller
 			// echo '<pre>';
 			// print_r($discount);
 		}
-		$i = 1;
+		$i = $this->input->post('specialid');
 		foreach ($this->input->post('product_special[][]') as $k) {
 
 			$special = [
@@ -648,6 +719,33 @@ class Admin extends CI_Controller
 	// 	$this->load->view('admin/category');
 	// 	$this->load->view('admin/footer');
 	// }
+	public function addfilter()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		// $data['admin'] = $this->Admin_model->getuserdetails($id);
+		// $data['category'] = $this->Product_model->addcategory();
+
+		$fil = array(
+			'filtername' => $this->input->post('filname'),
+			'sortorder' => $this->input->post('filorder'),
+		);
+
+		$result = $this->Product_model->addfilter($fil);
+
+		if ($result) {
+			redirect('admin/filter');
+		}
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/filter');
+		$this->load->view('admin/footer');
+	}
 	public function addcategory()
 	{
 		if (!$this->session->userdata('id')) {
@@ -675,6 +773,16 @@ class Admin extends CI_Controller
 		$this->load->view('admin/footer');
 	}
 
+	public function deletefilter()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->deletefilter($id);
+	}
 	public function deletecategory()
 	{
 		if (!$this->session->has_userdata('id')) {
@@ -684,6 +792,18 @@ class Admin extends CI_Controller
 
 		$id = $_POST["id"];
 		$data = $this->Product_model->deletecategory($id);
+	}
+	public function editfilter()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+
+
+		$id = $_POST["id"];
+		$data = $this->Product_model->editfilter($id);
+
+		echo json_encode($data);
 	}
 	public function editcategory()
 	{
@@ -696,6 +816,22 @@ class Admin extends CI_Controller
 		$data = $this->Product_model->editcategory($id);
 
 		echo json_encode($data);
+	}
+	public function updatefilter()
+	{
+		if (!$this->session->has_userdata('id')) {
+			redirect(base_url() . 'user/login');
+		}
+		$id = $_POST["id"];
+		$fil = [
+			'filtername' => $_POST["filname"],
+			'sortorder' => $_POST["filorder"]
+		];
+		$r = $this->Product_model->updatefilter($id, $fil);
+
+		if ($r) {
+			echo "data was updated";
+		}
 	}
 	public function updatecategory()
 	{
@@ -1100,6 +1236,41 @@ class Admin extends CI_Controller
 		redirect('user/login');
 	}
 
+	public function filter()
+	{
+		$data['title'] = 'Home';
+		$data['css'] = base_url() . 'asset/css/home.css';
+		$id = $this->session->userdata('id');
+		$data['admin'] = $this->Admin_model->getuserdetails($id);
+		$order = 'ASC';
+		$data['order'] = 'ASC';
+		$count = '';
+		$data['count'] = '';
+		if ($this->input->get('sort') == 'desc') {
+			$order = 'DESC';
+			$data['order'] = 'DESC';
+		}
+		if ($this->input->get('sort') == 'asc') {
+			$order = 'ASC';
+			$data['order'] = 'ASC';
+		}
+		if ($this->input->get('count') == 'desc') {
+			$count = 'DESC';
+			$data['count'] = 'DESC';
+		}
+		if ($this->input->get('count') == 'asc') {
+			$count = 'ASC';
+			$data['count'] = 'ASC';
+		}
+
+
+
+		$data['filter'] = $this->Product_model->filter($order, $count);
+
+		$this->load->view('admin/header', $data);
+		$this->load->view('admin/filter');
+		$this->load->view('admin/footer');
+	}
 	public function categories()
 	{
 		$data['title'] = 'Home';
@@ -1136,6 +1307,16 @@ class Admin extends CI_Controller
 		$this->load->view('admin/footer');
 	}
 
+	public function deleteproductattribute()
+	{
+		if (!$this->session->userdata('id')) {
+			redirect('user/login');
+		}
+
+		$id = $this->input->post('id');
+
+		$r = $this->Product_model->deleteproductattribute($id);
+	}
 	public function deleteoption()
 	{
 		if (!$this->session->userdata('id')) {

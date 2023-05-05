@@ -263,7 +263,17 @@
                                 <input type="text" name="manufacturer" value="" placeholder="Manufacturer" id="input-manufacturer" list="list-manufacturer" class="form-control">
                             </div>
                             <input type="hidden" name="manufacturer_id" value="0" id="input-manufacturer-id">
-                            <datalist id="list-manufacturer"></datalist>
+                            <datalist id="list-manufacturer">
+                            <datalist id="list-category">
+                                <?php
+                                foreach ($manufacturer as $man) :
+                                ?>
+                                    <option><?= $man['manufacturer'] ?></option>
+                                <?php
+                                endforeach;
+                                ?>
+                            </datalist>
+                            </datalist>
                             <div class="form-text">(Autocomplete)</div>
                         </div>
                     </div>
@@ -294,8 +304,28 @@
                 </div>
             </div>
             <div class="tab-pane" id="attribute" role="tabpanel" aria-labelledby="attribute-tab">
-                Attribute
-                <hr>
+                <div id="tab-attribute" class="tab-pane active">
+                    <div class="table-responsive">
+                        <table id="product-attribute" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td class="text-start">Attribute</td>
+                                    <td class="text-start">Text</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="text-end"><button type="button" id="button-attribute" data-bs-toggle="tooltip" title="" class="btn btn-primary" data-bs-original-title="Add Attribute" aria-label="Add Attribute"><i class="fas fa-plus-circle"></i></button></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane" id="optionview" role="tabpanel" aria-labelledby="option-tab">
                 Option
@@ -437,13 +467,40 @@
     $(document).ready(function() {
 
 
+    var attribute_row = 0;
+    
+    $('#button-attribute').on('click', function() {
+        html = '<tr id="attribute-row-' + attribute_row + '">';
+        html += '  <td class="text-start">';
+        html += '    <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="Attribute" id="input-attribute-' + attribute_row + '" list="list-attribute-0" class="form-control"/>';
+        html += '    <input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" id="input-attribute-id-' + attribute_row + '"/>';
+        html += '    <datalist id="list-attribute-0">';
+        html += '    <?php foreach ($attribute as $att) : ?> <option><?= $att['attributename'] ?></option> <?php endforeach ?>';
+        html += '    </datalist>';
+        html += '  </td>';
+        html += '  <td class="text-start">';
+        html += '<div class="input-group">';
+        html += '  <textarea name="product_attribute[' + attribute_row + '][product_attribute_description]" rows="5" placeholder="Text" id="input-text-' + attribute_row + '" class="form-control"></textarea>';
+        html += '</div>';
+        html += '  </td>';
+        html += '  <td class="text-end"><button type="button" onclick="$(\'#attribute-row-' + attribute_row + '\').remove();" data-bs-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#product-attribute tbody').append(html);
+
+        // attributeautocomplete(attribute_row);
+
+        attribute_row++;
+    });
+
+
         var option_row = 0;
 
         $('#button-option').on('click', function() {
             html = '<tr id="option-row-' + option_row + '">';
             // html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
             // html += '    <option value="1">Default</option>';
-            html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="'+ option_row +'"/></td>';
+            html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="' + option_row + '"/></td>';
 
             html += '  <td class="text-end"><input type="text" name="product_option[' + option_row + '][option_value]" value="" placeholder="Option Value" class="form-control"/></td>';
 

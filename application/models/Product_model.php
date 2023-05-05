@@ -8,9 +8,14 @@ class Product_model extends CI_Model
         $query = $this->db->insert('products', $data);
         return $query;
     }
+    public function addproductattribute($data)
+    {
+        $query = $this->db->insert('productattribute', $data);
+        return $query;
+    }
     public function addoption($data)
     {
-        $query = $this->db->insert('options', $data);
+        $query = $this->db->insert('optionss', $data);
         return $query;
     }
     public function adddiscount($data)
@@ -61,6 +66,27 @@ class Product_model extends CI_Model
 
         return $q->result_array();
     }
+    public function getmanufacturer()
+    {
+
+        $q = $this->db->get('manufacturers');
+
+        return $q->result_array();
+    }
+    public function getattribute()
+    {
+
+        $q = $this->db->get('attribute');
+
+        return $q->result_array();
+    }
+    public function productattribute($id)
+    {
+
+        $query = $this->db->get_where('productattribute', array('productid' => $id));
+
+        return $query->result_array();
+    }
     public function getproduct($id)
     {
 
@@ -89,6 +115,13 @@ class Product_model extends CI_Model
 
         return $query->result_array();
     }
+    public function getspecialid($id)
+    {
+
+        $query = $this->db->get_where('special', array('productid' => $id));
+
+        return $query->result_array();
+    }
     public function getoption()
     {
 
@@ -96,10 +129,10 @@ class Product_model extends CI_Model
 
         return $query->result_array();
     }
-    public function getoptionvalue()
+    public function getoptionvalue($id)
     {
 
-        $query = $this->db->get('optionss');
+        $query = $this->db->get_where('optionss', array('productid' => $id));
 
         return $query->result_array();
     }
@@ -132,6 +165,19 @@ class Product_model extends CI_Model
             $this->db->order_by('category', $order);
         }
         $q = $this->db->get('category');
+        return $q->result_array();
+    }
+    public function filter($order = '', $count = '')
+    {
+        if ($count != null) {
+
+            $this->db->order_by('sortorder', $count);
+        }
+        if ($order != null) {
+
+            $this->db->order_by('filtername', $order);
+        }
+        $q = $this->db->get('filter');
         return $q->result_array();
     }
     public function attribute($order = '', $count = '')
@@ -255,6 +301,11 @@ class Product_model extends CI_Model
         $this->db->delete('manufacturers');
     }
     
+    public function addfilter($data)
+    {
+        $query = $this->db->insert('filter', $data);
+        return $query;
+    }
     public function addcategory($data)
     {
         $query = $this->db->insert('category', $data);
@@ -265,6 +316,11 @@ class Product_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('category');
     }
+    public function deletefilter($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('filter');
+    }
     public function deleteproduct($id)
     {
         $this->db->where('id', $id);
@@ -272,11 +328,24 @@ class Product_model extends CI_Model
     }
 
 
+    public function editfilter($id)
+    {
+        $q = $this->db->get_where('filter', array('id' => $id));
+
+        return $q->first_row('array');
+    }
     public function editcategory($id)
     {
         $q = $this->db->get_where('category', array('id' => $id));
 
         return $q->first_row('array');
+    }
+    public function updatefilter($id, $data)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('filter');
+        return $q;
     }
     public function updatecategory($id, $data)
     {
@@ -292,6 +361,13 @@ class Product_model extends CI_Model
         $q = $this->db->get('product');
         
         return $q->first_row('array');
+    }
+    public function editproductattribute($data, $id)
+    {
+        $q = $this->db->set($data)
+            ->where('id', $id)
+            ->update('productattribute');
+        return $q;
     }
     public function editoption($data, $id)
     {
@@ -321,6 +397,11 @@ class Product_model extends CI_Model
             ->update('products');
         return $q;
     }
+    public function editproductattributeadd($data)
+    {
+        $query = $this->db->insert('productattribute', $data);
+        return $query;
+    }
     public function editoptionadd($data)
     {
         $query = $this->db->insert('optionss', $data);
@@ -340,6 +421,11 @@ class Product_model extends CI_Model
     {
         $query = $this->db->insert('special', $data);
         return $query;
+    }
+    public function deleteproductattribute($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('productattribute');
     }
     public function deleteoption($id)
     {
